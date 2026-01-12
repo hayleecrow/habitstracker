@@ -25,7 +25,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-My startup application allows users to track their progress with developing new daily habits and encourage their friends in their habit building as well. Users are able to add a habit they want to build, set a daily goal, and track their uninterrupted streak.
+Are their multiple habits you are wanting to build? Have you ever wished there was an easy way to keep track of your progress? Habit Tracker allows you to easily keep track of all your daily goals and track your progress. You can also see your friends goals and encourage them in their progress.
 
 ### Design
 
