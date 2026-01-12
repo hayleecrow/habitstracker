@@ -1,4 +1,4 @@
-# Your startup name here
+# Habits Tracker
 
 [My Notes](notes.md)
 
