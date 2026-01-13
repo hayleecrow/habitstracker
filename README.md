@@ -2,6 +2,7 @@
 
 [My Notes](notes.md)
 
+- Good commit messages include the what and why and often use consistant naming conventions
 - 
 
 > [!NOTE]
