@@ -55,12 +55,15 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Basic structure and organization. Three HTML pages: one for login, one for managing the user's habits, and one for viewing and interacting with friends' habits.
+- **CSS** - Styling so it looks appealing and good on different screens, and animating the streak fire.
+- **React** - Provides login and changes how the streak looks when a goal is completed.
+- **Service** - Backend service with endpoints for:
+    - Retriving and storing habits and streak counts
+    - Register, login, logout users, and securly store their info
+    - Allow user to choose an emoji to go along with their habit using EmojiHub service (https://github.com/cheatsnake/emojihub).
+- **DB/Login** - Store authentication information, users, habits, and streaks in database.
+- **WebSocket** - Broadcasts a user's streak and habits to their connected friends.
 
 ## 🚀 AWS deliverable
 
