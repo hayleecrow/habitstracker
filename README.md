@@ -25,7 +25,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Are their multiple habits you are wanting to build? Have you ever wished there was an easy way to keep track of your progress? Habit Tracker allows you to easily keep track of all your daily goals and track your progress. You can also see your friends goals and encourage them in their progress.
+Are their multiple habits you are wanting to build? Have you ever wished there was an easy way to keep track of your progress? Habit Tracker allows you to easily keep track of all your daily goals and track your progress. You can also see your friends goals and encourage them in their progress. Work together to build the habits you've always wanted!
 
 ### Design
 
