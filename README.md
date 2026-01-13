@@ -42,9 +42,14 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure login
+- Ability to add a daily goal for a habit
+- Ability to mark a goal completed for that day
+- Tracks how many days in a row a goal was completed
+- Displays all the user's goals and their uninterrupted streaks
+- Display user's overall uninterrupted streak of completing all their goals for a day
+- Ability to see the streaks and goals of the user's friends
+- Ability to add a friend
 
 ### Technologies
 
