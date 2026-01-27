@@ -62,7 +62,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
 - [ ] **Links** - I did not complete this part of the deliverable.
 - [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
+- [x] **3rd party API placeholder** - My Habits page has a placeholder for emojis that users can pick for each habit
 - [x] **Images** - Included a logo for my startup
 - [x] **Login placeholder** - Placeholder for login page
 - [x] **DB data placeholder** - The My Habits page has a table that will display the user's habit and streak information
