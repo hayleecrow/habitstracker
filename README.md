@@ -66,7 +66,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [ ] **Images** - I did not complete this part of the deliverable.
 - [ ] **Login placeholder** - I did not complete this part of the deliverable.
 - [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **WebSocket placeholder** - The friends page has a table that will show the user's friend's information
 
 ## 🚀 CSS deliverable
 
