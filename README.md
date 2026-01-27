@@ -60,7 +60,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [ ] **HTML pages** - I did not complete this part of the deliverable.
 - [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
+- [x] **Links** - Links to each page and my GitHub repo on every page
 - [x] **Text** - Textual info on My Habits and Friends pages
 - [x] **3rd party API placeholder** - My Habits page has a placeholder for emojis that users can pick for each habit
 - [x] **Images** - Included a logo for my startup
