@@ -65,7 +65,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
 - [ ] **Images** - I did not complete this part of the deliverable.
 - [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
+- [x] **DB data placeholder** - The My Habits page has a table that will display the user's habit and streak information
 - [x] **WebSocket placeholder** - The friends page has a table that will show the user's friend's information
 
 ## 🚀 CSS deliverable
