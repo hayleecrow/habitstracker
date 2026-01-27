@@ -58,8 +58,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - Three different HTML pages. 'login.html', 'my_habits.html', and 'friends.html'.
+- [x] **Proper HTML element usage** - I used header, footer, img, table, title, div, and span tags. I even learned how to include a checkbox and dropdown menu.
 - [x] **Links** - Links to each page and my GitHub repo on every page
 - [x] **Text** - Textual info on My Habits and Friends pages
 - [x] **3rd party API placeholder** - My Habits page has a placeholder for emojis that users can pick for each habit
