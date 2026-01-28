@@ -3,3 +3,9 @@
 * {
     font-family: Vend Sans;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-width: 350px;
+}
