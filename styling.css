@@ -9,3 +9,7 @@ body {
     flex-direction: column;
     min-width: 350px;
 }
+
+header {
+    flex: 0 80px;
+}
