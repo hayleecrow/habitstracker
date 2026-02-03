@@ -14,6 +14,10 @@ header {
     flex: 0 80px;
 }
 
+footer {
+    display: flex;
+}
+
 menu {
     flex: 1;
     display: flex;
