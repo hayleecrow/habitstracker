@@ -32,6 +32,6 @@ img {
 menu {
     flex: 1;
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
     list-style: none;
 }
