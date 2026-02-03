@@ -13,6 +13,8 @@ body {
 header {
     flex: 0 80px;
     display: flex;
+    background-color: rgb(62, 62, 62);
+    color: rgb(236, 227, 227);
 }
 
 footer {
