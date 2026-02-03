@@ -19,6 +19,12 @@ footer {
     display: flex;
 }
 
+img {
+    flex: 0 0;
+    width: 50px;
+    height: 50px;
+}
+
 menu {
     flex: 1;
     display: flex;
