@@ -72,12 +72,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Visually appealing colors and layout. No overflowing elements.** - I did not complete this part of the deliverable.
-- [ ] **Use of a CSS framework** - I did not complete this part of the deliverable.
-- [ ] **All visual elements styled using CSS** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing using flexbox and/or grid display** - I did not complete this part of the deliverable.
-- [ ] **Use of a imported font** - I did not complete this part of the deliverable.
-- [ ] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I did not complete this part of the deliverable.
+- [x] **Visually appealing colors and layout. No overflowing elements.** - I used Bootstrap and a universal Css file `styling.css` to do most of the styling. I also used `my_habits.css` and `friends.css` for a few relative styling. 
+- [x] **Use of a CSS framework** - I used Bootstrap for formatting tables, buttons, and most of the headers and footers.
+- [x] **All visual elements styled using CSS** - Every visual elements are either formatted using local CSS or Bootstrap.
+- [x] **Responsive to window resizing using flexbox and/or grid display** - I only used flexbox. I tried using grid for some sections but it never fit well.
+- [x] **Use of a imported font** - I imported Vend Sans font. I love how it looks when bolded.
+- [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I used mostly classes and pseudo selectors. I included ids for some of my elements, but didn't end up selecting them using CSS.
 
 ## 🚀 React part 1: Routing deliverable
 
