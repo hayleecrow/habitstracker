@@ -60,3 +60,15 @@ menu .nav-item {
 footer a {
     float: right;
 }
+
+@media (max-height: 500px) {
+  header {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+  main {
+    flex: 1 100vh;
+  }
+}
