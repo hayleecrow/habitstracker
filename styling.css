@@ -46,3 +46,7 @@ menu {
     flex-direction: row !important;
     list-style: none;
 }
+
+footer a {
+    float: right;
+}
