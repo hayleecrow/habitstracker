@@ -21,6 +21,10 @@ header {
     justify-content: left;
 }
 
+main {
+    text-align: center;
+}
+
 footer {
     display: flex;
     background-color: darkslategray;
