@@ -15,7 +15,7 @@ body {
 header {
     flex: 0 80px;
     display: flex;
-    background-color: rgb(62, 62, 62);
+    background-color: darkslategray;
     color: rgb(236, 227, 227);
     align-items: center;
     justify-content: left;
@@ -23,6 +23,7 @@ header {
 
 footer {
     display: flex;
+    background-color: darkslategray;
 }
 
 img {
