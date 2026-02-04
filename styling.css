@@ -22,10 +22,12 @@ header {
 }
 
 main {
+    flex: 1 calc(100vh - 110px);
     text-align: center;
 }
 
 footer {
+    flex: 0 30px;
     background-color: darkslategray;
     color: rgb(255, 255, 255, .5);
 }
