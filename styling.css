@@ -26,8 +26,8 @@ main {
 }
 
 footer {
-    display: flex;
     background-color: darkslategray;
+    color: rgb(255, 255, 255, .5);
 }
 
 img {
