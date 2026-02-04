@@ -16,7 +16,7 @@ header {
     flex: 0 80px;
     display: flex;
     background-color: darkslategray;
-    color: rgb(236, 227, 227);
+    color: white;
     align-items: center;
     justify-content: left;
 }
