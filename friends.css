@@ -2,3 +2,19 @@ main {
     text-align: start;
     align-items: normal;
 }
+
+table {
+    border: 2px solid black !important;
+}
+
+td, th {
+    border: 1px solid black !important;
+}
+
+th {
+    text-align: center;
+}
+
+button {
+    margin-left: auto;
+}
