@@ -8,6 +8,14 @@ h2 {
     font-size: 1.25em;
 }
 
+#name {
+    float: left;
+}
+
+#overall-streak {
+    float: right;
+}
+
 table {
     border: 2px solid black !important;
 }
