@@ -1,7 +1,6 @@
 main {
     text-align: start;
-    align-items: start;
-    justify-content: start;
+    align-items: normal;
 }
 
 h2 {
