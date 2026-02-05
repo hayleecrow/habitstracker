@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: lightblue;
+    background-color: rgb(196, 238, 252);
     display: flex;
     flex-direction: column;
     min-width: 350px;
@@ -15,7 +15,7 @@ body {
 header {
     flex: 0 80px;
     display: flex;
-    background-color: darkslategray;
+    background-color: #0F1E2E;
     color: white;
     align-items: center;
     justify-content: left;
@@ -32,7 +32,7 @@ main {
 
 footer {
     flex: 0 30px;
-    background-color: darkslategray;
+    background-color: #1A2332;
     color: rgb(255, 255, 255, .5);
 }
 
