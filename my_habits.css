@@ -23,6 +23,10 @@ td, th {
     border: 1px solid black !important;
 }
 
+th, .checkbox {
+    text-align: center;
+}
+
 button {
     margin-left: auto;
 }
