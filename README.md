@@ -83,9 +83,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - I did not complete this part of the deliverable.
+- [x] **Bundled using Vite** - It was easy to install and use Vite (did it in class).
+- [x] **Components** - Professor Jensen's instructions made it creating these easy.
+- [x] **Router** - Now I know why most websites don't have `.html` on the end of every page...because they use a Router and JSX instead of pure HTML.
 
 ## 🚀 React part 2: Reactivity deliverable
 
