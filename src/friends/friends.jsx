@@ -3,7 +3,7 @@ import './friends.css';
 
 export function Friends() {
   return (
-    <main className="container-fluid">
+    <main className="friends container-fluid">
         <h1>Friends</h1>
         <table className="table table-warning">
             <thead className="table-dark">
