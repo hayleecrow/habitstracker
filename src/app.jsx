@@ -22,6 +22,9 @@ export default function App() {
                     </menu>
                 </nav>
             </header>
+
+            <main>App components go here</main>
+
             <footer>
                 <div class="container-fluid">
                     <span class="text-reset">Author: Haylee Crow</span>
