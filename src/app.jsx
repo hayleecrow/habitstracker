@@ -22,6 +22,12 @@ export default function App() {
                     </menu>
                 </nav>
             </header>
+            <footer>
+                <div class="container-fluid">
+                    <span class="text-reset">Author: Haylee Crow</span>
+                    <a class="text-reset" href="https://github.com/hayleecrow/habitstracker">GitHub</a>
+                </div>
+            </footer>
         </div>
     );
 }
