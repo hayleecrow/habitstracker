@@ -9,6 +9,7 @@ import { Friends } from './friends/friends';
 
 export default function App() {
     return (
+      <BrowserRouter>
         <div className="body">
             <header className="container-fluid">
                 <img className="logo" alt="Habit Go logo" src="habit_tracker_logo_transparent.png"/>
@@ -37,5 +38,6 @@ export default function App() {
                 </div>
             </footer>
         </div>
+      </BrowserRouter>
     );
 }
