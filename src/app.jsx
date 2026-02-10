@@ -17,13 +17,13 @@ export default function App() {
                     <NavLink className="navbar-brand text-reset" href="#">Habit Go<sup>&reg;</sup></NavLink>
                     <menu className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink className="nav-link active" href="index.html">Login</NavLink>
+                            <NavLink className="nav-link active" to="">Login</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" href="my_habits.html">My Habits</NavLink>
+                            <NavLink className="nav-link" to="my_habits">My Habits</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" href="friends.html">Friends</NavLink>
+                            <NavLink className="nav-link" to="friends">Friends</NavLink>
                         </li>
                     </menu>
                 </nav>
