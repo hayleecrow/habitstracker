@@ -11,7 +11,7 @@ export function Friends() {
                     <th>Name</th><th>Streak</th><th>Habits</th>
                 </tr>
             </thead>
-            <body>
+            <tbody>
                 <tr>
                     <td>Sarah</td><td>20<span>🔥</span></td><td><details><summary>Details</summary><ul><li>10<span>🔥</span> Exercise - 10 min</li></ul></details></td>
                 </tr>
@@ -21,7 +21,7 @@ export function Friends() {
                 <tr>
                     <td>Jack</td><td>4<span></span></td><td><details><summary>Details</summary></details></td>
                 </tr>
-            </body>
+            </tbody>
         </table>
         <button className="btn btn-primary" type="button">Add Friend +</button>
     </main>
