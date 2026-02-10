@@ -17,7 +17,7 @@ export default function App() {
                     <NavLink className="navbar-brand text-reset" to="">Habit Go<sup>&reg;</sup></NavLink>
                     <menu className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink className="nav-link active" to="">Login</NavLink>
+                            <NavLink className="nav-link" to="">Login</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="my_habits">My Habits</NavLink>
