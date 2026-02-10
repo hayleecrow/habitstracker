@@ -29,7 +29,12 @@ export default function App() {
                 </nav>
             </header>
 
-            <main>App components go here</main>
+            <Routes>
+                <Route path='/' element={<Login />} exact />
+                <Route path='/my_habits' element={<MyHabits />} />
+                <Route path='/friends' element={<Friends />} />
+                <Route path='*' element={<NotFound />} />
+            </Routes>
 
             <footer>
                 <div className="container-fluid">
