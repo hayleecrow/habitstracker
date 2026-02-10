@@ -14,16 +14,16 @@ export default function App() {
             <header className="container-fluid">
                 <img className="logo" alt="Habit Go logo" src="habit_tracker_logo_transparent.png"/>
                 <nav className="navbar navbar-dark">
-                    <a className="navbar-brand text-reset" href="#">Habit Go<sup>&reg;</sup></a>
+                    <NavLink className="navbar-brand text-reset" href="#">Habit Go<sup>&reg;</sup></NavLink>
                     <menu className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link active" href="index.html">Login</a>
+                            <NavLink className="nav-link active" href="index.html">Login</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="my_habits.html">My Habits</a>
+                            <NavLink className="nav-link" href="my_habits.html">My Habits</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="friends.html">Friends</a>
+                            <NavLink className="nav-link" href="friends.html">Friends</NavLink>
                         </li>
                     </menu>
                 </nav>
