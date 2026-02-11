@@ -14,19 +14,3 @@ h2 {
 #overall-streak {
     float: right;
 }
-
-table {
-    border: 2px solid black !important;
-}
-
-td, th {
-    border: 1px solid black !important;
-}
-
-th, .checkbox {
-    text-align: center;
-}
-
-button {
-    margin-left: auto;
-}

@@ -57,6 +57,22 @@ menu .nav-item {
     padding: 0 0.3em;
 }
 
+table {
+    border: 2px solid black !important;
+}
+
+td, th {
+    border: 1px solid black !important;
+}
+
+th, .checkbox {
+    text-align: center;
+}
+
+button {
+    margin-left: auto;
+}
+
 footer a {
     float: right;
 }
