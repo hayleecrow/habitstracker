@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Login() {
+export function Home() {
   return (
     <main className="container-fluid">
         <h1>Welcome to Habit Go!</h1>
