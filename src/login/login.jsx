@@ -1,17 +1,19 @@
 import React from 'react';
 
-export function Login() {
+export function Login({ setUser }) {
     const [email, setEmail] = React.useState(localStorage.getItem('user') || '');
     const [password, setPassword] = React.useState(localStorage.getItem('password') || '');
 
     function loginUser() { 
         localStorage.setItem('user', email);
         localStorage.setItem('password', password);
+        setUser(email);
     }
 
     function createUser() {
         localStorage.setItem('user', email);
         localStorage.setItem('password', password);
+        setUser(email);
     }
 
     return (
