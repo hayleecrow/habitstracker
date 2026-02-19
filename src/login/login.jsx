@@ -9,6 +9,11 @@ export function Login() {
         localStorage.setItem('password', password);
     }
 
+    function createUser() {
+        localStorage.setItem('user', email);
+        localStorage.setItem('password', password);
+    }
+
     return (
     <main className="container-fluid">
         <h1>Welcome to Habit Go!</h1>
@@ -20,7 +25,7 @@ export function Login() {
                 <input className="form-control" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <button className="btn btn-primary" type="submit" onClick={loginUser}>Login</button>
-            <button className="btn" type="submit">Create Account</button>
+            <button className="btn" type="submit" onClick={createUser}>Create Account</button>
         </form>
     </main>
     );
