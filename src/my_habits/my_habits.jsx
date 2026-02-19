@@ -1,12 +1,12 @@
 import React from 'react';
 import './my_habits.css';
 
-export function MyHabits() {
+export function MyHabits({ user }) {
   return (
     <main className="container-fluid my_habits">
         <h1>My Habits</h1>
         <div className="user-info">
-            <h2 id="name">Mystery User's Name</h2>
+            <h2 id="name">{user}</h2>
             <h2 id="overall-streak">Overall Streak: 11<span>🔥</span></h2>
         </div>
         <table className="table table-warning">
