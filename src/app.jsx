@@ -32,9 +32,9 @@ export default function App() {
             </header>
 
             <Routes>
-                <Route path='/' element={<Login />} exact />
-                <Route path='/my_habits' element={<MyHabits />} />
-                <Route path='/friends' element={<Friends />} />
+                <Route path='/' element={<Login setUser={setUser} />} exact />
+                <Route path='/my_habits' element={<MyHabits user={user} />} />
+                <Route path='/friends' element={<Friends user={user} />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
 
