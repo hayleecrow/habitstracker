@@ -1,19 +1,24 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 export function Login({ setUser }) {
     const [email, setEmail] = React.useState(localStorage.getItem('user') || '');
     const [password, setPassword] = React.useState(localStorage.getItem('password') || '');
+    const navigate = useNavigate();
 
     function loginUser() { 
         localStorage.setItem('user', email);
         localStorage.setItem('password', password);
         setUser(email);
+        navigate('/my_habits');
     }
 
     function createUser() {
         localStorage.setItem('user', email);
         localStorage.setItem('password', password);
         setUser(email);
+        navigate('/my_habits');
     }
 
     return (
