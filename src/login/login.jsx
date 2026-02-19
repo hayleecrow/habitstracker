@@ -13,7 +13,7 @@ export function Login() {
     return (
     <main className="container-fluid">
         <h1>Welcome to Habit Go!</h1>
-        <form method="get" action="my_habits.html">
+        <form method="get">
             <div className="input-group mb-3">
                 <input className="form-control" type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
             </div>
