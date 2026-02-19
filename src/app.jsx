@@ -8,6 +8,8 @@ import { MyHabits } from './my_habits/my_habits';
 import { Friends } from './friends/friends';
 
 export default function App() {
+    const [user, setUser] = React.useState(localStorage.getItem('user') || null);
+
     return (
       <BrowserRouter>
         <div className="body">
@@ -20,10 +22,10 @@ export default function App() {
                             <NavLink className="nav-link" to="">Login</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="my_habits">My Habits</NavLink>
+                            {user && <NavLink className="nav-link" to="my_habits">My Habits</NavLink>}
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="friends">Friends</NavLink>
+                            {user && <NavLink className="nav-link" to="friends">Friends</NavLink>}
                         </li>
                     </menu>
                 </nav>
