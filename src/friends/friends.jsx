@@ -1,10 +1,14 @@
 import React from 'react';
 import './friends.css';
 
-export function Friends() {
+export function Friends({ user }) {
   return (
     <main className="friends container-fluid">
         <h1>Friends</h1>
+        <div className="user-info">
+            <h2 id="name">{user}</h2>
+            <h2 id="overall-streak">Overall Streak: 11<span>🔥</span></h2>
+        </div>
         <table className="table table-warning">
             <thead className="table-dark">
                 <tr>
