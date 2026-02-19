@@ -6,6 +6,7 @@ export function Login({ setUser }) {
     const [email, setEmail] = React.useState(localStorage.getItem('user') || '');
     const [password, setPassword] = React.useState(localStorage.getItem('password') || '');
     const navigate = useNavigate();
+    const user = localStorage.getItem('user');
 
     function loginUser() { 
         localStorage.setItem('user', email);
@@ -31,7 +32,7 @@ export function Login({ setUser }) {
     return (
     <main className="container-fluid">
         <h1>Welcome to Habit Go!</h1>
-        {!email && (
+        {!user && (
             <form method="get">
                 <div className="input-group mb-3">
                     <input className="form-control" type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
@@ -43,7 +44,7 @@ export function Login({ setUser }) {
                 <button className="btn" type="submit" onClick={createUser}>Create Account</button>
             </form>)
         }
-        {email && (
+        {user && (
             <div>
                 <h2>{email}</h2>
                 <button className="btn btn-primary" onClick={() => navigate('/my_habits')}>My Habits</button>
