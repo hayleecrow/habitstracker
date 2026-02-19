@@ -1,7 +1,7 @@
 import React from 'react';
 
 export function Login() {
-    const [email, setEmail] = React.useState(localStorage.getItem('email') || '');
+    const [email, setEmail] = React.useState(localStorage.getItem('user') || '');
     const [password, setPassword] = React.useState(localStorage.getItem('password') || '');
 
     function loginUser() { 
