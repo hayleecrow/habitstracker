@@ -7,7 +7,7 @@ export function MyHabits({ user }) {
         <h1>My Habits</h1>
         <div className="user-info">
             <h2 id="name">{user}</h2>
-            <h2 id="overall-streak">Overall Streak: 11<span>🔥</span></h2>
+            <h2 id="overall-streak">Overall Streak: 11<span className="fire">🔥</span></h2>
         </div>
         <table className="table table-warning">
             <thead className="table-dark">
@@ -17,13 +17,13 @@ export function MyHabits({ user }) {
             </thead>
             <tbody>
                 <tr>
-                    <td>9<span>🔥</span></td><td><span>📖</span> Scripture Study</td><td>15 min</td><td className="checkbox"><input type="checkbox"/></td>
+                    <td>9<span className="fire">🔥</span></td><td><span>📖</span> Scripture Study</td><td>15 min</td><td className="checkbox"><input type="checkbox"/></td>
                 </tr>
                 <tr>
-                    <td>15<span></span></td><td><span>💧</span> Drink Water</td><td>32 oz</td><td className="checkbox"><input type="checkbox"/></td>
+                    <td>15<span className="fire">🔥</span></td><td><span>💧</span> Drink Water</td><td>32 oz</td><td className="checkbox"><input type="checkbox"/></td>
                 </tr>
                 <tr>
-                    <td>10<span>🔥</span></td><td><span>💪</span> Exercise</td><td>30 min</td><td className="checkbox"><input type="checkbox"/></td>
+                    <td>10<span className="fire">🔥</span></td><td><span>💪</span> Exercise</td><td>30 min</td><td className="checkbox"><input type="checkbox"/></td>
                 </tr>
             </tbody>
         </table>
