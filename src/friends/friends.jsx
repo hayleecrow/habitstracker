@@ -7,7 +7,7 @@ export function Friends({ user }) {
         <h1>Friends</h1>
         <div className="user-info">
             <h2 id="name">{user}</h2>
-            <h2 id="overall-streak">Overall Streak: 11<span>🔥</span></h2>
+            <h2 id="overall-streak">Overall Streak: 11<span className="fire">🔥</span></h2>
         </div>
         <table className="table table-warning">
             <thead className="table-dark">
@@ -17,13 +17,13 @@ export function Friends({ user }) {
             </thead>
             <tbody>
                 <tr>
-                    <td>Sarah</td><td>20<span>🔥</span></td><td><details><summary>Details</summary><ul><li>10<span>🔥</span> Exercise - 10 min</li></ul></details></td>
+                    <td>Sarah</td><td>20<span className="fire">🔥</span></td><td><details><summary>Details</summary><ul><li>10<span className="fire">🔥</span> Exercise - 10 min</li></ul></details></td>
                 </tr>
                 <tr>
-                    <td>Eric</td><td>50<span>🔥</span></td><td><details><summary>Details</summary></details></td>
+                    <td>Eric</td><td>50<span className="fire">🔥</span></td><td><details><summary>Details</summary></details></td>
                 </tr>
                 <tr>
-                    <td>Jack</td><td>4<span></span></td><td><details><summary>Details</summary></details></td>
+                    <td>Jack</td><td>4<span className="fire">🔥</span></td><td><details><summary>Details</summary></details></td>
                 </tr>
             </tbody>
         </table>
