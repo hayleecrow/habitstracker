@@ -77,6 +77,11 @@ footer a {
     float: right;
 }
 
+.fire {
+    display: inline-block;
+    animation: fire_shake 0.5s infinite;
+}
+
 @media (max-height: 500px) {
   header {
     display: none;
@@ -87,4 +92,22 @@ footer a {
   main {
     flex: 1 100vh;
   }
+}
+
+@keyframes fire_shake {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(10deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }
