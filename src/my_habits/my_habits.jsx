@@ -2,7 +2,36 @@ import React from 'react';
 import './my_habits.css';
 
 export function MyHabits({ user }) {
-  return (
+    const [habits, setHabits] = React.useState([]);
+
+    React.useEffect(() => {
+        const habitsText = localStorage.getItem('habits');
+        if (habitsText) {
+            setHabits(JSON.parse(habitsText));
+        }
+    }, []);
+
+    const habitRows = [];
+    if (habits.length) {
+        for (const [i, habit] of habits.entries()) {
+            habitRows.push(
+                <tr key={i}>
+                <td>{streak}</td>
+                <td>{habit.habitName}</td>
+                <td>{habit.goal}</td>
+                <td>{habit.completed}</td>
+                </tr>
+            );
+        }
+    } else {
+        habitRows.push(
+        <tr key='0'>
+            <td colSpan='4' style={{textAlign: "center"}}>Add a habit to beginning tracking your goals!</td>
+        </tr>
+        );
+    }
+  
+    return (
     <main className="container-fluid my_habits">
         <h1>My Habits</h1>
         <div className="user-info">
@@ -12,20 +41,13 @@ export function MyHabits({ user }) {
         <table className="table table-warning">
             <thead className="table-dark">
                 <tr>
-                    <th>Streak</th><th>Habit</th><th>Goal</th><th>Completed</th>
+                    <th>Streak</th>
+                    <th>Habit</th>
+                    <th>Goal</th>
+                    <th>Completed</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>9<span className="fire">🔥</span></td><td><span>📖</span> Scripture Study</td><td>15 min</td><td className="checkbox"><input type="checkbox"/></td>
-                </tr>
-                <tr>
-                    <td>15<span className="fire">🔥</span></td><td><span>💧</span> Drink Water</td><td>32 oz</td><td className="checkbox"><input type="checkbox"/></td>
-                </tr>
-                <tr>
-                    <td>10<span className="fire">🔥</span></td><td><span>💪</span> Exercise</td><td>30 min</td><td className="checkbox"><input type="checkbox"/></td>
-                </tr>
-            </tbody>
+            <tbody id="habits">{habitRows}</tbody>
         </table>
         <button className="btn btn-primary" type="button">Add Habit +</button>
     </main>
