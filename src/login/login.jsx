@@ -8,18 +8,22 @@ export function Login({ setUser }) {
     const navigate = useNavigate();
     const user = localStorage.getItem('user');
 
-    function loginUser() { 
-        localStorage.setItem('user', email);
-        localStorage.setItem('password', password);
-        setUser(email);
-        navigate('/my_habits');
+    function loginUser() {
+        if (email !== "") {
+            localStorage.setItem('user', email);
+            localStorage.setItem('password', password);
+            setUser(email);
+            navigate('/my_habits');
+        }
     }
 
     function createUser() {
-        localStorage.setItem('user', email);
-        localStorage.setItem('password', password);
-        setUser(email);
-        navigate('/my_habits');
+        if (email !== "") {
+            localStorage.setItem('user', email);
+            localStorage.setItem('password', password);
+            setUser(email);
+            navigate('/my_habits');
+        }
     }
 
     function logoutUser() { 
