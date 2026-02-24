@@ -29,6 +29,7 @@ export function Login({ setUser }) {
     function logoutUser() { 
         localStorage.removeItem('user');
         localStorage.removeItem('password');
+        localStorage.removeItem('habits');
         setUser(null);
         location.reload();
     }
