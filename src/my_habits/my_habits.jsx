@@ -16,6 +16,23 @@ export function MyHabits({ user }) {
         }
     }, [habits]);
 
+    React.useEffect(() => {
+        setInterval(() => {
+            const now = new Date();
+            console.log(`Checking if it's midnight: ${now.getHours()}:${now.getMinutes()}`);
+            if (now.getHours() === 0 && now.getMinutes() === 0) {
+                const updatedHabits = habits.map(habit => {
+                    if (!habit.completedToday) {
+                        habit.streak = 0;
+                    }
+                    habit.completedToday = false;
+                    return habit;
+                });
+                setHabits(updatedHabits);
+            }
+        }, 60000);
+    }, []);
+
     function addHabit() {
         const newHabit = {
             streak: 0,
