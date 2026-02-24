@@ -1,6 +1,8 @@
 import React from 'react';
 import './my_habits.css';
 
+import { emojiAPI } from '../service';
+
 export function MyHabits({ user }) {
     const [habits, setHabits] = React.useState([]);
 
@@ -19,7 +21,7 @@ export function MyHabits({ user }) {
             habitRows.push(
                 <tr key={i}>
                 <td>{habit.streak}<span className="fire">🔥</span></td>
-                <td>{habit.habitName}</td>
+                <td><span>{ emojiAPI }</span>{habit.habitName}</td>
                 <td>{habit.goal}</td>
                 <td className="checkbox">{habit.completed}</td>
                 </tr>
