@@ -36,7 +36,7 @@ export function MyHabits({ user }) {
             habitRows.push(
                 <tr key={i}>
                     <td>{habit.streak}<span className="fire">🔥</span></td>
-                    <td><span>{emojiAPI}</span>{habit.emoji} {habit.habitName}</td>
+                    <td>{habit.emoji} {habit.habitName}</td>
                     <td>{habit.goal}</td>
                     <td className="checkbox">{habit.completedToday}</td>
                 </tr>
@@ -71,7 +71,7 @@ export function MyHabits({ user }) {
         <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#popup">Add Habit +</button>
         
         {/* Popup Modal Window */}
-        <div className="modal fade" id="popup" tabindex="-1" aria-labelledby="newHabit" aria-hidden="true">
+        <div className="modal fade" id="popup" tabIndex="-1" aria-labelledby="newHabit" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
