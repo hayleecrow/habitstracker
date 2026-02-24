@@ -12,9 +12,9 @@ export function MyHabits({ user }) {
     React.useEffect(() => {
         const habitsText = localStorage.getItem('habits');
         if (habitsText) {
-            setHabits(JSON.parse(habitsText));
+            localStorage.setItem('habits', JSON.stringify(habits));
         }
-    }, []);
+    }, [habits]);
 
     function addHabit() {
         const newHabit = {
@@ -27,7 +27,6 @@ export function MyHabits({ user }) {
 
         const updatedHabits = [...habits, newHabit];
         setHabits(updatedHabits);
-        localStorage.setItem('habits', JSON.stringify(updatedHabits));
     }
 
     function toggleHabitCompletion(i) {
@@ -38,7 +37,6 @@ export function MyHabits({ user }) {
             habits[i].streak--;
         }
         setHabits([...habits]);
-        localStorage.setItem('habits', JSON.stringify(habits));
     }
 
     const habitRows = [];
