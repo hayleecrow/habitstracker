@@ -11,6 +11,8 @@ export function MyHabits({ user }) {
         }
     }, []);
 
+    function addHabit() { }
+
     const habitRows = [];
     if (habits.length) {
         for (const [i, habit] of habits.entries()) {
@@ -49,7 +51,7 @@ export function MyHabits({ user }) {
             </thead>
             <tbody id="habits">{habitRows}</tbody>
         </table>
-        <button className="btn btn-primary" type="button">Add Habit +</button>
+        <button className="btn btn-primary" type="button" onClick={addHabit}>Add Habit +</button>
     </main>
   );
 }
