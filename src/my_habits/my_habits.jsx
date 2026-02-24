@@ -53,7 +53,36 @@ export function MyHabits({ user }) {
             </thead>
             <tbody id="habits">{habitRows}</tbody>
         </table>
-        <button className="btn btn-primary" type="button" onClick={addHabit}>Add Habit +</button>
+        <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#popup">Add Habit +</button>
+        
+        {/* Popup Modal Window */}
+        <div className="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+            <div className="modal-content">
+            <div className="modal-header">
+                <h1 className="modal-title fs-5" id="exampleModalLabel">New Habit</h1>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+                <form method="get">
+                    <div className="input-group mb-3">
+                        <input className="form-control" type="text" placeholder="Habit Name"/>
+                    </div>
+                    <div className="input-group mb-3">
+                        <input className="form-control" type="text" placeholder="Emoji"/>
+                    </div>
+                    <div className="input-group mb-3">
+                        <input className="form-control" type="text" placeholder="Daily Goal (ex. 15 min or 3 miles)"/>
+                    </div>
+                </form>
+            </div>
+            <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-primary" onClick={addHabit}>Save</button>
+            </div>
+            </div>
+        </div>
+        </div>
     </main>
   );
 }
