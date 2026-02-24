@@ -30,6 +30,17 @@ export function MyHabits({ user }) {
         localStorage.setItem('habits', JSON.stringify(updatedHabits));
     }
 
+    function toggleHabitCompletion(i) {
+        habits[i].completedToday = !habits[i].completedToday;
+        if (habits[i].completedToday) {
+            habits[i].streak++;
+        } else {
+            habits[i].streak--;
+        }
+        setHabits([...habits]);
+        localStorage.setItem('habits', JSON.stringify(habits));
+    }
+
     const habitRows = [];
     if (habits.length) {
         for (const [i, habit] of habits.entries()) {
@@ -38,7 +49,7 @@ export function MyHabits({ user }) {
                     <td>{habit.streak}<span className="fire">🔥</span></td>
                     <td>{habit.emoji} {habit.habitName}</td>
                     <td>{habit.goal}</td>
-                    <td className="checkbox">{habit.completedToday}</td>
+                    <td className="checkbox"><input type="checkbox" checked={habit.completedToday} onChange={() => toggleHabitCompletion(i)} /></td>
                 </tr>
             );
         }
