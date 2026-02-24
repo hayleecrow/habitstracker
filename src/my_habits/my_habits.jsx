@@ -16,10 +16,10 @@ export function MyHabits({ user }) {
         for (const [i, habit] of habits.entries()) {
             habitRows.push(
                 <tr key={i}>
-                <td>{streak}</td>
+                <td>{habit.streak}<span className="fire">🔥</span></td>
                 <td>{habit.habitName}</td>
                 <td>{habit.goal}</td>
-                <td>{habit.completed}</td>
+                <td className="checkbox">{habit.completed}</td>
                 </tr>
             );
         }
