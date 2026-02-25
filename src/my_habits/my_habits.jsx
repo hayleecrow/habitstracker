@@ -105,7 +105,7 @@ export function MyHabits({ user }) {
     <main className="container-fluid my_habits">
         <h1>My Habits</h1>
         <div className="user-info">
-            <h2 id="name">{user}</h2>
+            <h2 id="name">{user.split('@')[0]}</h2>
                 <h2 id="overall-streak">Overall Streak: {overallStreak[0].value}<span className="fire">🔥</span></h2>
         </div>
         <table className="table table-warning">
