@@ -1,8 +1,6 @@
 import React from 'react';
 import './my_habits.css';
 
-import { emojiAPI } from '../service';
-
 export function MyHabits({ user }) {
     const [habits, setHabits] = React.useState(localStorage.getItem('habits') ? JSON.parse(localStorage.getItem('habits')) : []);
     const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : [{ value: 0, completedToday: false }]);
@@ -17,20 +15,14 @@ export function MyHabits({ user }) {
     }, []);
 
     React.useEffect(() => {
-        const habitsText = localStorage.getItem('habits');
-        if (habitsText) {
-            localStorage.setItem('habits', JSON.stringify(habits));
-        }
-    }, [habits]);
-
-    React.useEffect(() => {
+        localStorage.setItem('habits', JSON.stringify(habits));
         localStorage.setItem('overallStreak', JSON.stringify(overallStreak));
-    }, [overallStreak]);
+    }, [habits, overallStreak]);
 
+    // reset habits at midnight and update streaks accordingly
     React.useEffect(() => {
         setInterval(() => {
             const now = new Date();
-            console.log(`Checking if it's midnight: ${now.getHours()}:${now.getMinutes()}`);
             if (now.getHours() === 0 && now.getMinutes() === 0) {
                 const updatedHabits = habits.map(habit => {
                     if (!habit.completedToday) {
@@ -135,6 +127,7 @@ export function MyHabits({ user }) {
                         <div className="input-group mb-3">
                             <input className="form-control" type="text" placeholder="Habit Name" onChange={(e) => setNewHabitName(e.target.value)} />
                         </div>
+                        {/* Third party API will be integrated here for emoji selection */}
                         <div className="input-group mb-3">
                             <input className="form-control" type="text" placeholder="Emoji" onChange={(e) => setNewHabitEmoji(e.target.value)} />
                         </div>

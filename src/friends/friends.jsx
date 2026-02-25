@@ -81,6 +81,7 @@ export function Friends({ user }) {
                         <th>Habits</th>
                     </tr>
                 </thead>
+                {/* Websocket will update friend's streaks and habit information */}
                 <tbody id="friends">
                     <tr>
                         <td>{user.split('@')[0]} (Me)</td><td>{overallStreak[0].value}<span className="fire">🔥</span></td><td><ul>{habitBulletpts}</ul></td>
