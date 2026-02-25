@@ -5,10 +5,15 @@ import { emojiAPI } from '../service';
 
 export function MyHabits({ user }) {
     const [habits, setHabits] = React.useState(localStorage.getItem('habits') ? JSON.parse(localStorage.getItem('habits')) : []);
-    const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : 0);
+    const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : [{value: 0, completedToday: false}]);
     const [newHabitName, setNewHabitName] = React.useState('');
     const [newHabitEmoji, setNewHabitEmoji] = React.useState('');
     const [newHabitGoal, setNewHabitGoal] = React.useState('');
+
+    React.useEffect(() => {
+        localStorage.setItem('habits', JSON.stringify(habits));
+        localStorage.setItem('overallStreak', JSON.stringify(overallStreak));
+    }, []);
 
     React.useEffect(() => {
         const habitsText = localStorage.getItem('habits');
@@ -36,7 +41,9 @@ export function MyHabits({ user }) {
                 setHabits(updatedHabits);
 
                 if (habits.some(habit => !habit.completedToday)) {
-                    setOverallStreak(0);
+                    setOverallStreak([{ value: 0, completedToday: false }]);
+                } else {
+                    setOverallStreak([{ value: overallStreak[0].value, completedToday: false }]);
                 }
             }
         }, 60000);
@@ -66,9 +73,11 @@ export function MyHabits({ user }) {
         setHabits([...habits]);
 
         // update overall streak (if all habits are completed, increase overall streak, if unchecking any habit, reset overall streak back what it was at the beginning of the day)
-        if (habits.every(habit => habit.completedToday)) {
-            setOverallStreak(overallStreak + 1);
-        } else { }
+        if (habits.every(habit => habit.completedToday) && !overallStreak[0].completedToday) {
+            setOverallStreak([{ value: overallStreak[0].value + 1, completedToday: true }]);
+        } else if (habits.some(habit => !habit.completedToday) && overallStreak[0].completedToday) {
+            setOverallStreak([{ value: overallStreak[0].value - 1, completedToday: false }]);
+        }
     }
 
     const habitRows = [];
@@ -97,7 +106,7 @@ export function MyHabits({ user }) {
         <h1>My Habits</h1>
         <div className="user-info">
             <h2 id="name">{user}</h2>
-                <h2 id="overall-streak">Overall Streak: {overallStreak}<span className="fire">🔥</span></h2>
+                <h2 id="overall-streak">Overall Streak: {overallStreak[0].value}<span className="fire">🔥</span></h2>
         </div>
         <table className="table table-warning">
             <thead className="table-dark">
