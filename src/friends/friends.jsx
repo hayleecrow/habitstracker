@@ -2,12 +2,20 @@ import React from 'react';
 import './friends.css';
 
 export function Friends({ user }) {
-  return (
+    const [habits, setHabits] = React.useState(localStorage.getItem('habits') ? JSON.parse(localStorage.getItem('habits')) : []);
+    const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : [{ value: 0, completedToday: false }]);
+
+    React.useEffect(() => {
+        localStorage.setItem('habits', JSON.stringify(habits));
+        localStorage.setItem('overallStreak', JSON.stringify(overallStreak));
+    }, []);
+  
+    return (
     <main className="friends container-fluid">
         <h1>Friends</h1>
         <div className="user-info">
             <h2 id="name">{user}</h2>
-            <h2 id="overall-streak">Overall Streak: 11<span className="fire">🔥</span></h2>
+            <h2 id="overall-streak">Overall Streak: {overallStreak[0].value}<span className="fire">🔥</span></h2>
         </div>
         <table className="table table-warning">
             <thead className="table-dark">
