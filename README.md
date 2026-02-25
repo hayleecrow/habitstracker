@@ -91,8 +91,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - All buttons and input fields have the proper functionality and their are placeholders for future implementation of Database, Services, and Websocket elements
+- [x] **Hooks** - I used useState and useEffect a lot! I now understand much better the syntax of useEffect (especially how the dependency array works). I also used setInterval once and want to use it more in the future as I implement a few extra functionalities.
 
 ## 🚀 Service deliverable
 
