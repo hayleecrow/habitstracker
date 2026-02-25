@@ -5,7 +5,8 @@ import { emojiAPI } from '../service';
 
 export function MyHabits({ user }) {
     const [habits, setHabits] = React.useState(localStorage.getItem('habits') ? JSON.parse(localStorage.getItem('habits')) : []);
-    const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : [{value: 0, completedToday: false}]);
+    const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : [{ value: 0, completedToday: false }]);
+    
     const [newHabitName, setNewHabitName] = React.useState('');
     const [newHabitEmoji, setNewHabitEmoji] = React.useState('');
     const [newHabitGoal, setNewHabitGoal] = React.useState('');
@@ -119,10 +120,10 @@ export function MyHabits({ user }) {
             </thead>
             <tbody id="habits">{habitRows}</tbody>
         </table>
-        <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#popup">Add Habit +</button>
+        <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#create_new_habit">Add Habit +</button>
         
         {/* Popup Modal Window */}
-        <div className="modal fade" id="popup" tabIndex="-1" aria-labelledby="newHabit" aria-hidden="true">
+        <div className="modal fade" id="create_new_habit" tabIndex="-1" aria-labelledby="newHabit" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div className="modal-content">
                     <div className="modal-header">
