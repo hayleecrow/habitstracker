@@ -6,11 +6,30 @@ export function Friends({ user }) {
     const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : [{ value: 0, completedToday: false }]);
     const [friends, setFriends] = React.useState(localStorage.getItem('friends') ? JSON.parse(localStorage.getItem('friends')) : []);
 
+    const [newFriendName, setNewFriendName] = React.useState('');
+    const [newFriendEmail, setNewFriendEmail] = React.useState('');
+
     React.useEffect(() => {
         localStorage.setItem('habits', JSON.stringify(habits));
         localStorage.setItem('overallStreak', JSON.stringify(overallStreak));
         localStorage.setItem('friends', JSON.stringify(friends));
     }, []);
+
+    React.useEffect(() => {
+        localStorage.setItem('friends', JSON.stringify(friends));
+    }, [friends]);
+
+    function addFriend() {
+        const newFriend = {
+            name: newFriendName,
+            email: newFriendEmail,
+            overallStreak: 0,
+            habits: []
+        };
+
+        const updatedFriends = [...friends, newFriend];
+        setFriends(updatedFriends);
+    }
 
     const habitBulletpts = [];
     if (habits.length) {
@@ -69,7 +88,33 @@ export function Friends({ user }) {
                     {friendRows}
                 </tbody>
             </table>
-            <button className="btn btn-primary" type="button">Add Friend +</button>
+            <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add_new_friend">Add Friend +</button>
+
+            {/* Popup Modal Window */}
+            <div className="modal fade" id="add_new_friend" tabIndex="-1" aria-labelledby="newFriend" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="newFriend">New Friend</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div className="modal-body">
+                        <form method="get">
+                            <div className="input-group mb-3">
+                                <input className="form-control" type="text" placeholder="Friend's Name" onChange={(e) => setNewFriendName(e.target.value)} />
+                            </div>
+                            <div className="input-group mb-3">
+                                <input className="form-control" type="text" placeholder="Friend's Email" onChange={(e) => setNewFriendEmail(e.target.value)} />
+                            </div>
+                        </form>
+                    </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={addFriend}>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     );
 }
