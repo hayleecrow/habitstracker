@@ -82,6 +82,10 @@ footer a {
     animation: fire_shake 0.5s infinite;
 }
 
+ul {
+    margin-bottom: 0;
+}
+
 @media (max-height: 500px) {
   header {
     display: none;
