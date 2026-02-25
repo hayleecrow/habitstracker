@@ -5,6 +5,7 @@ import { emojiAPI } from '../service';
 
 export function MyHabits({ user }) {
     const [habits, setHabits] = React.useState(localStorage.getItem('habits') ? JSON.parse(localStorage.getItem('habits')) : []);
+    const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : 0);
     const [newHabitName, setNewHabitName] = React.useState('');
     const [newHabitEmoji, setNewHabitEmoji] = React.useState('');
     const [newHabitGoal, setNewHabitGoal] = React.useState('');
@@ -15,6 +16,10 @@ export function MyHabits({ user }) {
             localStorage.setItem('habits', JSON.stringify(habits));
         }
     }, [habits]);
+
+    React.useEffect(() => {
+        localStorage.setItem('overallStreak', JSON.stringify(overallStreak));
+    }, [overallStreak]);
 
     React.useEffect(() => {
         setInterval(() => {
@@ -29,6 +34,10 @@ export function MyHabits({ user }) {
                     return habit;
                 });
                 setHabits(updatedHabits);
+
+                if (habits.some(habit => !habit.completedToday)) {
+                    setOverallStreak(0);
+                }
             }
         }, 60000);
     }, []);
@@ -47,6 +56,7 @@ export function MyHabits({ user }) {
     }
 
     function toggleHabitCompletion(i) {
+        // toggle individual habit completion and update streaks
         habits[i].completedToday = !habits[i].completedToday;
         if (habits[i].completedToday) {
             habits[i].streak++;
@@ -54,6 +64,11 @@ export function MyHabits({ user }) {
             habits[i].streak--;
         }
         setHabits([...habits]);
+
+        // update overall streak (if all habits are completed, increase overall streak, if unchecking any habit, reset overall streak back what it was at the beginning of the day)
+        if (habits.every(habit => habit.completedToday)) {
+            setOverallStreak(overallStreak + 1);
+        } else { }
     }
 
     const habitRows = [];
@@ -76,12 +91,13 @@ export function MyHabits({ user }) {
         );
     }
   
+
     return (
     <main className="container-fluid my_habits">
         <h1>My Habits</h1>
         <div className="user-info">
             <h2 id="name">{user}</h2>
-            <h2 id="overall-streak">Overall Streak: 11<span className="fire">🔥</span></h2>
+                <h2 id="overall-streak">Overall Streak: {overallStreak}<span className="fire">🔥</span></h2>
         </div>
         <table className="table table-warning">
             <thead className="table-dark">
