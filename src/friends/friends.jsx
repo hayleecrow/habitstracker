@@ -33,11 +33,8 @@ export function Friends({ user }) {
                     <td>{friend.name}</td>
                     <td>{friend.overallStreak}<span className="fire">🔥</span></td>
                     <td>
-                        <details>
-                            <summary>Details</summary>
-                            <ul>
-                            </ul>
-                        </details>
+                        <ul>
+                        </ul>
                     </td>
                 </tr>
             )
@@ -67,7 +64,7 @@ export function Friends({ user }) {
                 </thead>
                 <tbody id="friends">
                     <tr>
-                        <td>{user.split('@')[0]}</td><td>{overallStreak[0].value}<span className="fire">🔥</span></td><td><details><summary>Details</summary><ul>{habitBulletpts}</ul></details></td>
+                        <td>{user.split('@')[0]} (Me)</td><td>{overallStreak[0].value}<span className="fire">🔥</span></td><td><ul>{habitBulletpts}</ul></td>
                     </tr>
                     {friendRows}
                 </tbody>
