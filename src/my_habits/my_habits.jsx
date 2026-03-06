@@ -1,5 +1,6 @@
 import React from 'react';
 import './my_habits.css';
+// import schedule from 'node-schedule';
 
 export function MyHabits({ user }) {
     const [habits, setHabits] = React.useState(localStorage.getItem('habits') ? JSON.parse(localStorage.getItem('habits')) : []);
@@ -20,27 +21,25 @@ export function MyHabits({ user }) {
     }, [habits, overallStreak]);
 
     // reset habits at midnight and update streaks accordingly
-    React.useEffect(() => {
-        setInterval(() => {
-            const now = new Date();
-            if (now.getHours() === 0 && now.getMinutes() === 0) {
-                const updatedHabits = habits.map(habit => {
-                    if (!habit.completedToday) {
-                        habit.streak = 0;
-                    }
-                    habit.completedToday = false;
-                    return habit;
-                });
-                setHabits(updatedHabits);
-
-                if (habits.some(habit => !habit.completedToday)) {
-                    setOverallStreak([{ value: 0, completedToday: false }]);
-                } else {
-                    setOverallStreak([{ value: overallStreak[0].value, completedToday: false }]);
-                }
+    // schedule.scheduleJob('0 0 * * *', () => { resetHabits });
+    function resetHabits() {
+        // const now = new Date();
+        // if (now.getHours() === 0 && now.getMinutes() === 0) {
+        const updatedHabits = habits.map(habit => {
+            if (!habit.completedToday) {
+                habit.streak = 0;
             }
-        }, 60000);
-    }, []);
+            habit.completedToday = false;
+            return habit;
+        });
+        setHabits(updatedHabits);
+
+        if (habits.some(habit => !habit.completedToday)) {
+            setOverallStreak([{ value: 0, completedToday: false }]);
+        } else {
+            setOverallStreak([{ value: overallStreak[0].value, completedToday: false }]);
+        }
+    }
 
     function addHabit() {
         const newHabit = {
