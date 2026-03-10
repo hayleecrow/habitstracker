@@ -42,6 +42,11 @@ function setAuthCookie(res, user) {
     });
 }
 
+function clearAuthCookie(res, user) { 
+    delete user.token;
+    res.clearCookie('token');
+}
+
 // Endpoints
 
 app.post('/api/auth', async (req, res) => {
@@ -52,4 +57,34 @@ app.post('/api/auth', async (req, res) => {
         setAuthCookie(res, user);
         res.send({ message: 'User created' });
     }
+});
+
+app.put('/api/auth', async (req, res) => { 
+    const user = await getUser('email', req.body.email);
+    if (user && await bcrypt.compare(req.body.password, user.password)) { 
+        setAuthCookie(res, user);
+        res.send({ email: user.email });
+    } else {
+        res.status(400).send({ message: 'Unauthorized' });
+    }
+});
+
+app.delete('/api/auth', async (req, res) => { 
+    const token = req.cookies['token'];
+    const user = await getUser('token', token);
+    if (user) { 
+        clearAuthCookie(res, user);
+    }
+    res.send({});
+});
+
+// getMe
+app.get('/api/user/me', async (req, res) => {
+  const token = req.cookies['token'];
+  const user = await getUser('token', token);
+  if (user) {
+    res.send({ email: user.email });
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
 });
