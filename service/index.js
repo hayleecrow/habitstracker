@@ -6,3 +6,38 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static('public'));
+
+const bcrypt = require('bcryptjs');
+
+let users = [];
+let habits = [];
+
+async function createUser(email, password) { 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = {
+        email:email,
+        password: hashedPassword
+    };
+    users.push(user);
+    return user;
+}
+
+function getUser(field, value) { 
+    if (value) { 
+        return users.find((user) => user[field] === value);
+    }
+    return null;
+}
+
+// Create a token for the user and send a cookie containing the token
+function setAuthCookie(res, user) { 
+    user.token = uuid.v4();
+
+    res.cookie('token', user.token, {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+    });
+}
