@@ -41,3 +41,15 @@ function setAuthCookie(res, user) {
         sameSite: 'strict',
     });
 }
+
+// Endpoints
+
+app.post('/api/auth', async (req, res) => {
+    if (await getUser('email', req.body.email)) {
+        res.status(400).send({ message: 'User already exists' });
+    } else { 
+        const user = await createUser(req.body.email, req.body.password);
+        setAuthCookie(res, user);
+        res.send({ message: 'User created' });
+    }
+});
