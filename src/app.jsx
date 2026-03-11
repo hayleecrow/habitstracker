@@ -7,46 +7,49 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { MyHabits } from './my_habits/my_habits';
 import { Friends } from './friends/friends';
+import { AuthState } from './login/authState';
 
 export default function App() {
     const [user, setUser] = React.useState(localStorage.getItem('user') || null);
+    const currentAuthState = user ? AuthState.Authenticated : AuthState.Unauthenticated;
+    const [authState, setAuthState] = React.useState(currentAuthState);
 
     return (
-      <BrowserRouter>
-        <div className="body">
-            <header className="container-fluid">
-                <img className="logo" alt="Habit Go logo" src="habit_tracker_logo_transparent.png"/>
-                <nav className="navbar navbar-dark">
-                    <NavLink className="navbar-brand text-reset" to="">Habit Go<sup>&reg;</sup></NavLink>
-                    <menu className="navbar-nav">
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="">Login</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            {user && <NavLink className="nav-link" to="my_habits">My Habits</NavLink>}
-                        </li>
-                        <li className="nav-item">
-                            {user && <NavLink className="nav-link" to="friends">Friends</NavLink>}
-                        </li>
-                    </menu>
-                </nav>
-            </header>
+        <BrowserRouter>
+            <div className="body">
+                <header className="container-fluid">
+                    <img className="logo" alt="Habit Go logo" src="habit_tracker_logo_transparent.png"/>
+                    <nav className="navbar navbar-dark">
+                        <NavLink className="navbar-brand text-reset" to="">Habit Go<sup>&reg;</sup></NavLink>
+                        <menu className="navbar-nav">
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="">{ authState === AuthState.Unauthenticated ? 'Login' : 'Logout' }</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                {authState === AuthState.Authenticated && <NavLink className="nav-link" to="my_habits">My Habits</NavLink>}
+                            </li>
+                            <li className="nav-item">
+                                {authState === AuthState.Authenticated && <NavLink className="nav-link" to="friends">Friends</NavLink>}
+                            </li>
+                        </menu>
+                    </nav>
+                </header>
 
-            <Routes>
-                <Route path='/' element={<Login setUser={setUser} />} exact />
-                <Route path='/my_habits' element={<MyHabits user={user} />} />
-                <Route path='/friends' element={<Friends user={user} />} />
-                <Route path='*' element={<NotFound />} />
-            </Routes>
+                <Routes>
+                    <Route path='/' element={<Login setUser={setUser} authState={authState} setAuthState={setAuthState} />} />
+                    <Route path='/my_habits' element={<MyHabits user={user} />} />
+                    <Route path='/friends' element={<Friends user={user} />} />
+                    <Route path='*' element={<NotFound />} />
+                </Routes>
 
-            <footer>
-                <div className="container-fluid">
-                    <span className="text-reset">Author: Haylee Crow</span>
-                    <a className="text-reset" href="https://github.com/hayleecrow/habitstracker">GitHub</a>
-                </div>
-            </footer>
-        </div>
-      </BrowserRouter>
+                <footer>
+                    <div className="container-fluid">
+                        <span className="text-reset">Author: Haylee Crow</span>
+                        <a className="text-reset" href="https://github.com/hayleecrow/habitstracker">GitHub</a>
+                    </div>
+                </footer>
+            </div>
+        </BrowserRouter>
     );
 }
 
