@@ -8,8 +8,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 
-const bcrypt = require('bcryptjs');
-
 let users = [];
 let habits = [];
 
@@ -87,4 +85,9 @@ app.get('/api/user/me', async (req, res) => {
   } else {
     res.status(401).send({ msg: 'Unauthorized' });
   }
+});
+
+const port = 3000;
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
 });
