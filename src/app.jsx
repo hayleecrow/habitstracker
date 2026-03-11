@@ -14,6 +14,11 @@ export default function App() {
     const currentAuthState = user ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
 
+    function onAuthChange(user, authState) {
+        setUser(user);
+        setAuthState(authState);
+    }
+
     return (
         <BrowserRouter>
             <div className="body">
@@ -36,7 +41,7 @@ export default function App() {
                 </header>
 
                 <Routes>
-                    <Route path='/' element={<Login setUser={setUser} authState={authState} setAuthState={setAuthState} />} />
+                    <Route path='/' element={<Login setUser={setUser} authState={authState} onAuthChange={onAuthChange} />} />
                     <Route path='/my_habits' element={<MyHabits user={user} />} />
                     <Route path='/friends' element={<Friends user={user} />} />
                     <Route path='*' element={<NotFound />} />
