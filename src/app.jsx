@@ -10,7 +10,7 @@ import { Friends } from './friends/friends';
 import { AuthState } from './login/authState';
 
 export default function App() {
-    const [user, setUser] = React.useState(localStorage.getItem('user') || null);
+    const [user, setUser] = React.useState('');
     const currentAuthState = user ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
 
@@ -41,7 +41,7 @@ export default function App() {
                 </header>
 
                 <Routes>
-                    <Route path='/' element={<Login setUser={setUser} authState={authState} onAuthChange={onAuthChange} />} />
+                    <Route path='/' element={<Login user={user} authState={authState} onAuthChange={onAuthChange} />} />
                     <Route path='/my_habits' element={<MyHabits user={user} />} />
                     <Route path='/friends' element={<Friends user={user} />} />
                     <Route path='*' element={<NotFound />} />

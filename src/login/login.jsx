@@ -2,43 +2,34 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-export function Login({ setUser }) {
-    const [email, setEmail] = React.useState(localStorage.getItem('user') || '');
-    const [password, setPassword] = React.useState(localStorage.getItem('password') || '');
+export function Login({ user, authState, onAuthChange }) {
+    const [userName, setUserName] = React.useState(user);
+    const [password, setPassword] = React.useState('');
     const navigate = useNavigate();
-    const user = localStorage.getItem('user');
 
     function loginUser() {
-        if (email !== "") {
-            localStorage.setItem('user', email);
-            localStorage.setItem('password', password);
-            setUser(email);
+        if (userName !== "") {
+            onAuthChange(userName, AuthState.Authenticated);
             navigate('/my_habits');
         }
     }
 
     function createUser() {
-        if (email !== "") {
-            localStorage.setItem('user', email);
-            localStorage.setItem('password', password);
-            setUser(email);
+        if (userName !== "") {
+            onAuthChange(userName, AuthState.Authenticated);
             navigate('/my_habits');
         }
     }
 
     function logoutUser() { 
-        localStorage.removeItem('user');
-        localStorage.removeItem('password');
-        localStorage.removeItem('habits');
-        localStorage.removeItem('overallStreak');
-        setUser(null);
+        onAuthChange(userName, AuthState.Unauthenticated);
         location.reload();
     }
 
     return (
     <main className="container-fluid">
         <h1>Welcome to Habit Go!</h1>
-        {!user && (
+        {authState === AuthState.Unauthenticated && (
             <form method="get">
                 <div className="input-group mb-3">
                     <input className="form-control" type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
@@ -50,9 +41,9 @@ export function Login({ setUser }) {
                 <button className="btn" type="submit" onClick={createUser}>Create Account</button>
             </form>)
         }
-        {user && (
+        {authState === AuthState.Authenticated && (
             <div>
-                <h2>{email}</h2>
+                <h2>{userName}</h2>
                 <button className="btn btn-primary" onClick={() => navigate('/my_habits')}>My Habits</button>
                 <button className="btn" onClick={logoutUser}>Logout</button>
             </div>
