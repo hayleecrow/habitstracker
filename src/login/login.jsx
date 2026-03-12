@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { registerUser } from '../service';
+import { AuthState } from './authState';
 
 export function Login({ user, authState, onAuthChange }) {
     const [userName, setUserName] = React.useState(user);
@@ -16,6 +17,7 @@ export function Login({ user, authState, onAuthChange }) {
 
     function createUser() {
         if (userName !== "") {
+            registerUser(userName, password);
             onAuthChange(userName, AuthState.Authenticated);
             navigate('/my_habits');
         }
@@ -32,13 +34,13 @@ export function Login({ user, authState, onAuthChange }) {
         {authState === AuthState.Unauthenticated && (
             <form method="get">
                 <div className="input-group mb-3">
-                    <input className="form-control" type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+                    <input className="form-control" type="text" placeholder="Username" onChange={(e) => setUserName(e.target.value)}/>
                 </div>
                 <div className="input-group mb-3">
                     <input className="form-control" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-                <button className="btn btn-primary" type="submit" onClick={loginUser}>Login</button>
-                <button className="btn" type="submit" onClick={createUser}>Create Account</button>
+                <button className="btn btn-primary" onClick={loginUser}>Login</button>
+                <button className="btn" onClick={createUser}>Create Account</button>
             </form>)
         }
         {authState === AuthState.Authenticated && (
