@@ -54,6 +54,7 @@ app.post('/api/auth', async (req, res) => {
         const user = await createUser(req.body.userName, req.body.password);
         setAuthCookie(res, user);
         res.send({ message: 'User created' });
+        console.log(users);
     }
 });
 
@@ -62,6 +63,7 @@ app.put('/api/auth', async (req, res) => {
     if (user && await bcrypt.compare(req.body.password, user.password)) { 
         setAuthCookie(res, user);
         res.send({ userName: user.userName });
+        console.log(users);
     } else {
         res.status(400).send({ message: 'Unauthorized' });
     }
