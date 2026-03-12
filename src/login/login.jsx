@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../service';
+import { registerUser, authUser, logoutUserService } from '../service';
 import { AuthState } from './authState';
 
 export function Login({ user, authState, onAuthChange }) {
@@ -8,24 +8,31 @@ export function Login({ user, authState, onAuthChange }) {
     const [password, setPassword] = React.useState('');
     const navigate = useNavigate();
 
-    function loginUser() {
+    async function loginUser() {
         if (userName !== "") {
-            onAuthChange(userName, AuthState.Authenticated);
-            navigate('/my_habits');
+            const response = await authUser(userName, password);
+            if (response.ok) {
+                navigate('/my_habits');
+                onAuthChange(userName, AuthState.Authenticated);
+            }
         }
     }
 
-    function createUser() {
+    async function createUser() {
         if (userName !== "") {
-            registerUser(userName, password);
-            onAuthChange(userName, AuthState.Authenticated);
-            navigate('/my_habits');
+            const response = await registerUser(userName, password);
+            if (response.ok) {
+                navigate('/my_habits');
+                onAuthChange(userName, AuthState.Authenticated);
+            }
         }
     }
 
-    function logoutUser() { 
-        onAuthChange(userName, AuthState.Unauthenticated);
-        location.reload();
+    async function logoutUser() { 
+        await logoutUserService();
+        navigate('/login');
+        onAuthChange(null, AuthState.Unauthenticated);
+        // location.reload();
     }
 
     return (
