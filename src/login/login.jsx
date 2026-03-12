@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerUser, authUser, logoutUserService } from '../service';
+import { registerUser, loginUserService, logoutUserService } from '../service';
 import { AuthState } from './authState';
 
 export function Login({ user, authState, onAuthChange }) {
@@ -11,7 +11,7 @@ export function Login({ user, authState, onAuthChange }) {
     async function loginUser(e) {
         e.preventDefault();
         if (userName !== "") {
-            const response = await authUser(userName, password);
+            const response = await loginUserService(userName, password);
             if (response.ok) {
                 navigate('/my_habits');
                 onAuthChange(userName, AuthState.Authenticated);

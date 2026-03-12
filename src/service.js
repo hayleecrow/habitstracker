@@ -10,7 +10,7 @@ export async function registerUser(userName, password) {
     return response;
 }
 
-export async function authUser(userName, password) {
+export async function loginUserService(userName, password) {
     const response = await fetch('/api/auth', {
         method: 'PUT',
         headers: {
@@ -18,7 +18,7 @@ export async function authUser(userName, password) {
         },
         body: JSON.stringify({ "userName": userName, "password": password })
     });
-    console.log('authUser response:', response);
+    console.log('loginUserService response:', response);
     return response;
 }
 
