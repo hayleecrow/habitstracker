@@ -11,11 +11,11 @@ app.use(express.static('public'));
 let users = [];
 let habits = [];
 
-async function createUser(email, password) { 
+async function createUser(userName, password) { 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = {
-        email:email,
+        userName: userName,
         password: hashedPassword
     };
     users.push(user);
@@ -48,20 +48,20 @@ function clearAuthCookie(res, user) {
 // Endpoints
 
 app.post('/api/auth', async (req, res) => {
-    if (await getUser('email', req.body.email)) {
+    if (await getUser('userName', req.body.userName)) {
         res.status(400).send({ message: 'User already exists' });
     } else { 
-        const user = await createUser(req.body.email, req.body.password);
+        const user = await createUser(req.body.userName, req.body.password);
         setAuthCookie(res, user);
         res.send({ message: 'User created' });
     }
 });
 
 app.put('/api/auth', async (req, res) => { 
-    const user = await getUser('email', req.body.email);
+    const user = await getUser('userName', req.body.userName);
     if (user && await bcrypt.compare(req.body.password, user.password)) { 
         setAuthCookie(res, user);
-        res.send({ email: user.email });
+        res.send({ userName: user.userName });
     } else {
         res.status(400).send({ message: 'Unauthorized' });
     }
@@ -81,7 +81,7 @@ app.get('/api/user/me', async (req, res) => {
   const token = req.cookies['token'];
   const user = await getUser('token', token);
   if (user) {
-    res.send({ email: user.email });
+    res.send({ userName: user.userName });
   } else {
     res.status(401).send({ msg: 'Unauthorized' });
   }
