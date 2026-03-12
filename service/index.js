@@ -9,7 +9,6 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 let users = [];
-let habits = [];
 
 async function createUser(userName, password) { 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -45,7 +44,23 @@ function clearAuthCookie(res, user) {
     res.clearCookie('token');
 }
 
-// Endpoints
+function getHabitsForUser(userName) {
+    const user = getUser('userName', userName);
+    return user ? user.habits : res.status(400).send({ message: 'User does not exist' });
+}
+
+function updateHabits(userName, habit) {
+    const user = getUser('userName', userName);
+    if (user) {
+        if (!user.habits) {
+            user.habits = [];
+        }
+        user.habits.push(habit);
+    }
+    return user ? user.habits : res.status(400).send({ message: 'User does not exist' });
+}
+
+// Login Endpoints
 
 app.post('/api/auth', async (req, res) => {
     if (await getUser('userName', req.body.userName)) {
@@ -80,16 +95,38 @@ app.delete('/api/auth', async (req, res) => {
 
 // getMe
 app.get('/api/user/me', async (req, res) => {
-  const token = req.cookies['token'];
-  const user = await getUser('token', token);
-  if (user) {
-    res.send({ userName: user.userName });
-  } else {
-    res.status(401).send({ msg: 'Unauthorized' });
-  }
+    const token = req.cookies['token'];
+    const user = await getUser('token', token);
+    if (user) {
+        res.send({ userName: user.userName });
+    } else {
+        res.status(401).send({ msg: 'Unauthorized' });
+    }
+});
+
+// Middleware to verify that the user is authorized to call an endpoint
+const verifyAuth = async (req, res, next) => {
+    const user = await getUser('token', req.cookies[authCookieName]);
+    if (user) {
+        next();
+    } else {
+        res.status(401).send({ msg: 'Unauthorized' });
+    }
+};
+
+// Habits Endpoints
+
+app.get('/api/habits', verifyAuth, async (req, res) => {
+    const habits = await getHabitsForUser(req.body.userName);
+    res.send(habits);
+});
+
+app.post('/api/habits/add', verifyAuth, async (req, res) => {
+    const habits = await updateHabits(req.body.userName, req.body.habit);
+    res.send(habits);
 });
 
 const port = 3000;
 app.listen(port, function () {
-  console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}`);
 });
