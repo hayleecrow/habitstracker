@@ -8,7 +8,8 @@ export function Login({ user, authState, onAuthChange }) {
     const [password, setPassword] = React.useState('');
     const navigate = useNavigate();
 
-    async function loginUser() {
+    async function loginUser(e) {
+        e.preventDefault();
         if (userName !== "") {
             const response = await authUser(userName, password);
             if (response.ok) {
@@ -18,7 +19,8 @@ export function Login({ user, authState, onAuthChange }) {
         }
     }
 
-    async function createUser() {
+    async function createUser(e) {
+        e.preventDefault();
         if (userName !== "") {
             const response = await registerUser(userName, password);
             if (response.ok) {
@@ -28,9 +30,10 @@ export function Login({ user, authState, onAuthChange }) {
         }
     }
 
-    async function logoutUser() { 
+    async function logoutUser(e) {
+        e.preventDefault();
         await logoutUserService();
-        navigate('/login');
+        navigate('/');
         onAuthChange(null, AuthState.Unauthenticated);
         // location.reload();
     }
@@ -39,7 +42,7 @@ export function Login({ user, authState, onAuthChange }) {
     <main className="container-fluid">
         <h1>Welcome to Habit Go!</h1>
         {authState === AuthState.Unauthenticated && (
-            <form method="get">
+            <form>
                 <div className="input-group mb-3">
                     <input className="form-control" type="text" placeholder="Username" onChange={(e) => setUserName(e.target.value)}/>
                 </div>
