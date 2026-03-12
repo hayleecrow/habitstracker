@@ -1,20 +1,13 @@
-import { AuthState } from './login/authState.js';
-import { useNavigate } from 'react-router-dom';
-
 export async function registerUser(userName, password) { 
     const response = await fetch('/api/auth', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ userName, password })
+        body: JSON.stringify({ "userName": userName, "password": password })
     });
-    const data = await response.json();
-    return data;
-    if (response.ok) {
-        useNavigate('/my_habits');
-        onAuthChange(userName, AuthState.Authenticated);
-    }
+    console.log('registerUser response:', response);
+    return response;
 }
 
 export async function authUser(userName, password) {
@@ -23,15 +16,10 @@ export async function authUser(userName, password) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ userName, password })
+        body: JSON.stringify({ "userName": userName, "password": password })
     });
-    const data = await response.json();
     console.log('authUser response:', response);
-    return data;
-    if (response.ok) {
-        useNavigate('/my_habits');
-        onAuthChange(userName, AuthState.Authenticated);
-    }
+    return response;
 }
 
 export async function logoutUserService() {
@@ -41,8 +29,6 @@ export async function logoutUserService() {
             'Content-Type': 'application/json'
         }
     });
-    const data = await response.json();
-    return data;
-    useNavigate('/login');
-    onAuthChange(null, AuthState.Unauthenticated);
+    console.log('logoutUserService response:', response);
+    return response;
 }
