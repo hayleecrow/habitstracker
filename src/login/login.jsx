@@ -14,7 +14,7 @@ export function Login({ user, authState, onAuthChange }) {
             const response = await loginUserService(userName, password);
             if (response.ok) {
                 navigate('/my_habits');
-                onAuthChange(userName, AuthState.Authenticated);
+                onAuthChange(response.userName, AuthState.Authenticated);
             }
         }
     }
@@ -25,7 +25,7 @@ export function Login({ user, authState, onAuthChange }) {
             const response = await registerUser(userName, password);
             if (response.ok) {
                 navigate('/my_habits');
-                onAuthChange(userName, AuthState.Authenticated);
+                onAuthChange(response.userName, AuthState.Authenticated);
             }
         }
     }
