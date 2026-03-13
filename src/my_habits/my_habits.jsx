@@ -1,21 +1,28 @@
 import React from 'react';
 import './my_habits.css';
+import { getAllUserInfo, getInfoByField, updateUserInfo } from '../service';
 // import schedule from 'node-schedule';
 
-export function MyHabits({ user }) {
+export function MyHabits({ userName }) {
     const [habits, setHabits] = React.useState([]);
-    const [overallStreak, setOverallStreak] = React.useState([{ value: 0, completedToday: false }]);
+    const [overallStreak, setOverallStreak] = React.useState({});
     
     const [newHabitName, setNewHabitName] = React.useState('');
     const [newHabitEmoji, setNewHabitEmoji] = React.useState('');
     const [newHabitGoal, setNewHabitGoal] = React.useState('');
 
     React.useEffect(() => {
-        // update habits and overall streak on page load
+        const user = getAllUserInfo(userName);
+        user.then(userData => {
+            setHabits(userData.habits);
+            setOverallStreak(userData.overallStreak);
+        });
     }, []);
 
     React.useEffect(() => {
         // update habits and overall streak when habits or overallStreak state changes
+        updateUserInfo(userName, 'habits', habits);
+        updateUserInfo(userName, 'overallStreak', overallStreak);
     }, [habits, overallStreak]);
 
     // reset habits at midnight and update streaks accordingly
@@ -33,9 +40,9 @@ export function MyHabits({ user }) {
         setHabits(updatedHabits);
 
         if (habits.some(habit => !habit.completedToday)) {
-            setOverallStreak([{ value: 0, completedToday: false }]);
+            setOverallStreak({ value: 0, completedToday: false });
         } else {
-            setOverallStreak([{ value: overallStreak[0].value, completedToday: false }]);
+            setOverallStreak({ value: overallStreak.value, completedToday: false });
         }
     }
 
@@ -63,10 +70,10 @@ export function MyHabits({ user }) {
         setHabits([...habits]);
 
         // update overall streak (if all habits are completed, increase overall streak, if unchecking any habit, reset overall streak back what it was at the beginning of the day)
-        if (habits.every(habit => habit.completedToday) && !overallStreak[0].completedToday) {
-            setOverallStreak([{ value: overallStreak[0].value + 1, completedToday: true }]);
-        } else if (habits.some(habit => !habit.completedToday) && overallStreak[0].completedToday) {
-            setOverallStreak([{ value: overallStreak[0].value - 1, completedToday: false }]);
+        if (habits.every(habit => habit.completedToday) && !overallStreak.completedToday) {
+            setOverallStreak({ value: overallStreak.value + 1, completedToday: true });
+        } else if (habits.some(habit => !habit.completedToday) && overallStreak.completedToday) {
+            setOverallStreak({ value: overallStreak.value - 1, completedToday: false });
         }
     }
 
@@ -95,8 +102,8 @@ export function MyHabits({ user }) {
     <main className="container-fluid my_habits">
         <h1>My Habits</h1>
         <div className="user-info">
-            <h2 id="name">{user.split('@')[0]}</h2>
-                <h2 id="overall-streak">Overall Streak: {overallStreak[0].value}<span className="fire">🔥</span></h2>
+            <h2 id="name">{userName}</h2>
+                <h2 id="overall-streak">Overall Streak: {overallStreak.value}<span className="fire">🔥</span></h2>
         </div>
         <table className="table table-warning">
             <thead className="table-dark">
