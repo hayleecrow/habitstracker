@@ -108,8 +108,8 @@ const verifyAuth = async (req, res, next) => {
 
 // Habits Endpoints
 
-app.get('/api/habits', verifyAuth, async (req, res) => {
-    const habits = await getInfoForUser(req.body.userName, 'habits');
+app.get('/api/habits/:userName', verifyAuth, async (req, res) => {
+    const habits = await getInfoForUser(req.params.userName, 'habits');
     res.send(habits);
 });
 
@@ -124,8 +124,8 @@ app.post('/api/habits/add', verifyAuth, async (req, res) => {
     }
 });
 
-app.get('/api/overallStreak', verifyAuth, async (req, res) => {
-    const overallStreak = await getInfoForUser(req.body.userName, 'overallStreak');
+app.get('/api/overallStreak/:userName', verifyAuth, async (req, res) => {
+    const overallStreak = await getInfoForUser(req.params.userName, 'overallStreak');
     res.send(overallStreak);
 });
 
@@ -139,8 +139,8 @@ app.post('/api/overallStreak', verifyAuth, async (req, res) => {
     }
 });
 
-app.get('/api/friends', verifyAuth, async (req, res) => {
-    const friends = await getInfoForUser(req.body.userName, 'friends');
+app.get('/api/friends/:userName', verifyAuth, async (req, res) => {
+    const friends = await getInfoForUser(req.params.userName, 'friends');
     res.send(friends);
 });
 
