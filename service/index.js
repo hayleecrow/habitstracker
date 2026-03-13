@@ -15,7 +15,10 @@ async function createUser(userName, password) {
 
     const user = {
         userName: userName,
-        password: hashedPassword
+        password: hashedPassword,
+        habits: [],
+        overallStreak: { value: 0, completedToday: false },
+        friends: []
     };
     users.push(user);
     return user;
@@ -44,20 +47,9 @@ function clearAuthCookie(res, user) {
     res.clearCookie('token');
 }
 
-function getHabitsForUser(userName) {
+function getInfoForUser(userName, field) {
     const user = getUser('userName', userName);
-    return user ? user.habits : res.status(400).send({ message: 'User does not exist' });
-}
-
-function updateHabits(userName, habit) {
-    const user = getUser('userName', userName);
-    if (user) {
-        if (!user.habits) {
-            user.habits = [];
-        }
-        user.habits.push(habit);
-    }
-    return user ? user.habits : res.status(400).send({ message: 'User does not exist' });
+    return user ? user[field] : res.status(400).send({ message: 'User does not exist' });
 }
 
 // Login Endpoints
@@ -117,13 +109,49 @@ const verifyAuth = async (req, res, next) => {
 // Habits Endpoints
 
 app.get('/api/habits', verifyAuth, async (req, res) => {
-    const habits = await getHabitsForUser(req.body.userName);
+    const habits = await getInfoForUser(req.body.userName, 'habits');
     res.send(habits);
 });
 
 app.post('/api/habits/add', verifyAuth, async (req, res) => {
-    const habits = await updateHabits(req.body.userName, req.body.habit);
-    res.send(habits);
+    const user = getUser('userName', req.body.userName);
+    if (user) {
+        user.habits.push(req.body.habit);
+        res.send(user.habits);
+    }
+    else {
+        res.status(400).send({ message: 'User does not exist' });
+    }
+});
+
+app.get('/api/overallStreak', verifyAuth, async (req, res) => {
+    const overallStreak = await getInfoForUser(req.body.userName, 'overallStreak');
+    res.send(overallStreak);
+});
+
+app.post('/api/overallStreak', verifyAuth, async (req, res) => {
+    const user = await getUser('userName', req.body.userName);
+    if (user) {
+        user.overallStreak = req.body.overallStreak;
+        res.send(user.overallStreak);
+    } else {
+        res.status(400).send({ message: 'User does not exist' });
+    }
+});
+
+app.get('/api/friends', verifyAuth, async (req, res) => {
+    const friends = await getInfoForUser(req.body.userName, 'friends');
+    res.send(friends);
+});
+
+app.post('/api/friends/add', verifyAuth, async (req, res) => {
+    const user = await getUser('userName', req.body.userName);
+    if (user) {
+        user.friends.push(req.body.friend);
+        res.send(user.friends);
+    } else {
+        res.status(400).send({ message: 'User does not exist' });
+    }
 });
 
 const port = 3000;
