@@ -3,21 +3,19 @@ import './my_habits.css';
 // import schedule from 'node-schedule';
 
 export function MyHabits({ user }) {
-    const [habits, setHabits] = React.useState(localStorage.getItem('habits') ? JSON.parse(localStorage.getItem('habits')) : []);
-    const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : [{ value: 0, completedToday: false }]);
+    const [habits, setHabits] = React.useState([]);
+    const [overallStreak, setOverallStreak] = React.useState([{ value: 0, completedToday: false }]);
     
     const [newHabitName, setNewHabitName] = React.useState('');
     const [newHabitEmoji, setNewHabitEmoji] = React.useState('');
     const [newHabitGoal, setNewHabitGoal] = React.useState('');
 
     React.useEffect(() => {
-        localStorage.setItem('habits', JSON.stringify(habits));
-        localStorage.setItem('overallStreak', JSON.stringify(overallStreak));
+        // update habits and overall streak on page load
     }, []);
 
     React.useEffect(() => {
-        localStorage.setItem('habits', JSON.stringify(habits));
-        localStorage.setItem('overallStreak', JSON.stringify(overallStreak));
+        // update habits and overall streak when habits or overallStreak state changes
     }, [habits, overallStreak]);
 
     // reset habits at midnight and update streaks accordingly
