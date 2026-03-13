@@ -32,3 +32,38 @@ export async function logoutUserService() {
     console.log('logoutUserService response:', response);
     return response;
 }
+
+export async function getAllUserInfo(userName) {
+    const response = await fetch(`/api/user/${userName}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+    console.log('getAllUserInfo response:', response);
+    return response;
+}
+
+export async function getInfoByField(userName, field) {
+    const response = await fetch(`/api/${field}/${userName}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+    console.log(`getInfoByField response for field ${field}:`, response);
+    return response;
+}
+
+export async function updateUserInfo(userName, field, value) { 
+    const url = (field === 'habits' || field === 'friends') ? `/api/${field}/add` : `/api/${field}`;
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "userName": userName, [field]: value })
+    });
+    console.log(`updateUserInfo response for field ${field}:`, response);
+    return response;
+}
