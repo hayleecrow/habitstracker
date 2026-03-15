@@ -47,9 +47,9 @@ function clearAuthCookie(res, user) {
     res.clearCookie('token');
 }
 
-function getInfoForUser(userName, field) {
-    const user = getUser('userName', userName);
-    return user ? user[field] : res.status(400).send({ message: 'User does not exist' });
+function getInfoForUser(token, field) {
+    const user = getUser('token', token);
+    return user ? user[field] : null;
 }
 
 // Login Endpoints
@@ -60,7 +60,7 @@ app.post('/api/auth', async (req, res) => {
     } else { 
         const user = await createUser(req.body.userName, req.body.password);
         setAuthCookie(res, user);
-        res.send({ message: 'User created' });
+        res.send({ userName: user.userName });
         console.log(users);
     }
 });
@@ -98,7 +98,7 @@ app.get('/api/user/me', async (req, res) => {
 
 // Middleware to verify that the user is authorized to call an endpoint
 const verifyAuth = async (req, res, next) => {
-    const user = await getUser('token', req.cookies[authCookieName]);
+    const user = await getUser('token', req.cookies['token']);
     if (user) {
         next();
     } else {
@@ -108,15 +108,19 @@ const verifyAuth = async (req, res, next) => {
 
 // Habits Endpoints
 
-app.get('/api/habits/:userName', verifyAuth, async (req, res) => {
-    const habits = await getInfoForUser(req.params.userName, 'habits');
-    res.send(habits);
+app.get('/api/habits/get', verifyAuth, async (req, res) => {
+    const habits = await getInfoForUser(req.cookies['token'], 'habits');
+    if (habits != null) {
+        res.send(habits);
+    } else {
+        res.status(400).send({ message: 'User does not exist' });
+    }
 });
 
 app.post('/api/habits/add', verifyAuth, async (req, res) => {
-    const user = getUser('userName', req.body.userName);
+    const user = getUser('token', req.cookies['token']);
     if (user) {
-        user.habits.push(req.body.habit);
+        user.habits = req.body.habits;
         res.send(user.habits);
     }
     else {
@@ -124,13 +128,17 @@ app.post('/api/habits/add', verifyAuth, async (req, res) => {
     }
 });
 
-app.get('/api/overallStreak/:userName', verifyAuth, async (req, res) => {
-    const overallStreak = await getInfoForUser(req.params.userName, 'overallStreak');
-    res.send(overallStreak);
+app.get('/api/overallStreak/get', verifyAuth, async (req, res) => {
+    const overallStreak = await getInfoForUser(req.cookies['token'], 'overallStreak');
+    if (overallStreak != null) {
+        res.send(overallStreak);
+    } else {
+        res.status(400).send({ message: 'User does not exist' });
+    }
 });
 
-app.post('/api/overallStreak', verifyAuth, async (req, res) => {
-    const user = await getUser('userName', req.body.userName);
+app.post('/api/overallStreak/add', verifyAuth, async (req, res) => {
+    const user = await getUser('token', req.cookies['token']);
     if (user) {
         user.overallStreak = req.body.overallStreak;
         res.send(user.overallStreak);
@@ -139,15 +147,19 @@ app.post('/api/overallStreak', verifyAuth, async (req, res) => {
     }
 });
 
-app.get('/api/friends/:userName', verifyAuth, async (req, res) => {
-    const friends = await getInfoForUser(req.params.userName, 'friends');
-    res.send(friends);
+app.get('/api/friends/get', verifyAuth, async (req, res) => {
+    const friends = await getInfoForUser(req.cookies['token'], 'friends');
+    if (friends != null) {
+        res.send(friends);
+    } else {
+        res.status(400).send({ message: 'User does not exist' });
+    }
 });
 
 app.post('/api/friends/add', verifyAuth, async (req, res) => {
-    const user = await getUser('userName', req.body.userName);
+    const user = await getUser('token', req.cookies['token']);
     if (user) {
-        user.friends.push(req.body.friend);
+        user.friends = req.body.friends;
         res.send(user.friends);
     } else {
         res.status(400).send({ message: 'User does not exist' });
