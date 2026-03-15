@@ -12,15 +12,16 @@ export function MyHabits({ userName }) {
     const [newHabitGoal, setNewHabitGoal] = React.useState('');
 
     React.useEffect(() => {
-        const user = getAllUserInfo(userName);
-        user.then(userData => {
-            setHabits(userData.habits);
-            setOverallStreak(userData.overallStreak);
-        });
+        async function fetchUserInfo() {
+            const habits = await getInfoByField(userName, 'habits');
+            const overallStreak = await getInfoByField(userName, 'overallStreak');
+            setHabits(habits);
+            setOverallStreak(overallStreak);
+        }
+        fetchUserInfo();
     }, []);
 
     React.useEffect(() => {
-        // update habits and overall streak when habits or overallStreak state changes
         updateUserInfo(userName, 'habits', habits);
         updateUserInfo(userName, 'overallStreak', overallStreak);
     }, [habits, overallStreak]);
