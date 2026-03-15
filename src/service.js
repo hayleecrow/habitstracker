@@ -45,7 +45,7 @@ export async function getAllUserInfo(userName) {
 }
 
 export async function getInfoByField(userName, field) {
-    const response = await fetch(`/api/${field}/${userName}`, {
+    const response = await fetch(`/api/${field}/get`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -56,8 +56,7 @@ export async function getInfoByField(userName, field) {
 }
 
 export async function updateUserInfo(userName, field, value) { 
-    const url = (field === 'habits' || field === 'friends') ? `/api/${field}/add` : `/api/${field}`;
-    const response = await fetch(url, {
+    const response = await fetch(`/api/${field}/add`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
