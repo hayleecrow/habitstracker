@@ -8,13 +8,18 @@ export function Login({ user, authState, onAuthChange }) {
     const [password, setPassword] = React.useState('');
     const navigate = useNavigate();
 
+    React.useEffect(() => {
+        setUserName(user);
+    }, [user]);
+
     async function loginUser(e) {
         e.preventDefault();
         if (userName !== "") {
             const response = await loginUserService(userName, password);
+            const body = await response.json();
             if (response.ok) {
                 navigate('/my_habits');
-                onAuthChange(response.userName, AuthState.Authenticated);
+                onAuthChange(body.userName, AuthState.Authenticated);
             }
         }
     }
@@ -23,9 +28,10 @@ export function Login({ user, authState, onAuthChange }) {
         e.preventDefault();
         if (userName !== "") {
             const response = await registerUser(userName, password);
+            const body = await response.json();
             if (response.ok) {
                 navigate('/my_habits');
-                onAuthChange(response.userName, AuthState.Authenticated);
+                onAuthChange(body.userName, AuthState.Authenticated);
             }
         }
     }
