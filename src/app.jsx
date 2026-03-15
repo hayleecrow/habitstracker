@@ -14,9 +14,9 @@ export default function App() {
     const currentAuthState = user ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
 
-    function onAuthChange(user, authState) {
-        setUser(user);
-        setAuthState(authState);
+    function onAuthChange(userName, newAuthState) {
+        setUser(userName);
+        setAuthState(newAuthState);
     }
 
     return (
@@ -42,8 +42,8 @@ export default function App() {
 
                 <Routes>
                     <Route path='/' element={<Login user={user} authState={authState} onAuthChange={onAuthChange} />} />
-                    <Route path='/my_habits' element={<MyHabits user={user} />} />
-                    <Route path='/friends' element={<Friends user={user} />} />
+                    <Route path='/my_habits' element={<MyHabits userName={user} />} />
+                    <Route path='/friends' element={<Friends userName={user} />} />
                     <Route path='*' element={<NotFound />} />
                 </Routes>
 
