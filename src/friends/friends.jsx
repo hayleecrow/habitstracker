@@ -1,23 +1,36 @@
 import React from 'react';
 import './friends.css';
+import { getInfoByField, updateUserInfo } from '../service';
 
-export function Friends({ user }) {
-    const [habits, setHabits] = React.useState(localStorage.getItem('habits') ? JSON.parse(localStorage.getItem('habits')) : []);
-    const [overallStreak, setOverallStreak] = React.useState(localStorage.getItem('overallStreak') ? JSON.parse(localStorage.getItem('overallStreak')) : [{ value: 0, completedToday: false }]);
-    const [friends, setFriends] = React.useState(localStorage.getItem('friends') ? JSON.parse(localStorage.getItem('friends')) : []);
+export function Friends({ userName }) {
+    const [habits, setHabits] = React.useState([]);
+    const [overallStreak, setOverallStreak] = React.useState({});
+    const [isInitialized, setIsInitialized] = React.useState(false);
+    const [friends, setFriends] = React.useState([]);
 
     const [newFriendName, setNewFriendName] = React.useState('');
     const [newFriendEmail, setNewFriendEmail] = React.useState('');
 
     React.useEffect(() => {
-        localStorage.setItem('habits', JSON.stringify(habits));
-        localStorage.setItem('overallStreak', JSON.stringify(overallStreak));
-        localStorage.setItem('friends', JSON.stringify(friends));
+        async function fetchUserInfo() {
+            const habits = await getInfoByField(userName, 'habits');
+            const overallStreak = await getInfoByField(userName, 'overallStreak');
+            const friends = await getInfoByField(userName, 'friends');
+            setHabits(habits);
+            setOverallStreak(overallStreak);
+            setFriends(friends);
+            if (habits && overallStreak && friends) {
+                setIsInitialized(true);
+            }
+        }
+        fetchUserInfo();
     }, []);
 
     React.useEffect(() => {
-        localStorage.setItem('friends', JSON.stringify(friends));
-    }, [friends]);
+        if (isInitialized) {
+            updateUserInfo(userName, 'friends', friends);
+        }
+    }, [friends, isInitialized]);
 
     function addFriend() {
         const newFriend = {
@@ -70,8 +83,8 @@ export function Friends({ user }) {
         <main className="friends container-fluid">
             <h1>Friends</h1>
             <div className="user-info">
-                <h2 id="name">{user.split('@')[0]}</h2>
-                <h2 id="overall-streak">Overall Streak: {overallStreak[0].value}<span className="fire">🔥</span></h2>
+                <h2 id="name">{userName}</h2>
+                <h2 id="overall-streak">Overall Streak: {overallStreak.value}<span className="fire">🔥</span></h2>
             </div>
             <table className="table table-warning">
                 <thead className="table-dark">
@@ -84,7 +97,7 @@ export function Friends({ user }) {
                 {/* Websocket will update friend's streaks and habit information */}
                 <tbody id="friends">
                     <tr>
-                        <td>{user.split('@')[0]} (Me)</td><td>{overallStreak[0].value}<span className="fire">🔥</span></td><td><ul>{habitBulletpts}</ul></td>
+                        <td>{userName} (Me)</td><td>{overallStreak.value}<span className="fire">🔥</span></td><td><ul>{habitBulletpts}</ul></td>
                     </tr>
                     {friendRows}
                 </tbody>
