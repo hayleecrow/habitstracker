@@ -98,12 +98,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Node.js and Express are imported and work.
+- [x] **Static middleware for frontend** - Middleware for express, cookies, statics, and authentication in backend.
+- [x] **Calls to third party endpoints** - When adding a habit you can choose an emoji to go with it.
+- [x] **Backend service endpoints** - Service endpoints located in `service/index.js`.
+- [x] **Frontend calls service endpoints** - Most endpoint calls are in the `service.js` file in the frontend.
+- [x] **Supports registration, login, logout, and restricted endpoint** - Can successfully log in and out, makes a user token, and stores user info in memory.
 
 ## 🚀 DB deliverable
 
