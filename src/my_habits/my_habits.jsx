@@ -6,6 +6,7 @@ import { getAllUserInfo, getInfoByField, updateUserInfo } from '../service';
 export function MyHabits({ userName }) {
     const [habits, setHabits] = React.useState([]);
     const [overallStreak, setOverallStreak] = React.useState({});
+    const [isInitialized, setIsInitialized] = React.useState(false);
     
     const [newHabitName, setNewHabitName] = React.useState('');
     const [newHabitEmoji, setNewHabitEmoji] = React.useState('');
@@ -17,14 +18,19 @@ export function MyHabits({ userName }) {
             const overallStreak = await getInfoByField(userName, 'overallStreak');
             setHabits(habits);
             setOverallStreak(overallStreak);
+            if (habits && overallStreak) {
+                setIsInitialized(true);
+            }
         }
         fetchUserInfo();
     }, []);
 
     React.useEffect(() => {
-        updateUserInfo(userName, 'habits', habits);
-        updateUserInfo(userName, 'overallStreak', overallStreak);
-    }, [habits, overallStreak]);
+        if (isInitialized) {
+            updateUserInfo(userName, 'habits', habits);
+            updateUserInfo(userName, 'overallStreak', overallStreak);
+        }
+    }, [habits, overallStreak, isInitialized]);
 
     // reset habits at midnight and update streaks accordingly
     // schedule.scheduleJob('0 0 * * *', () => { resetHabits });
