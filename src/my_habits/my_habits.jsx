@@ -12,6 +12,11 @@ export function MyHabits({ userName }) {
     const [newHabitEmoji, setNewHabitEmoji] = React.useState('');
     const [newHabitGoal, setNewHabitGoal] = React.useState('');
 
+    const [emojis, setEmojis] = React.useState([]);
+    const [showEmojiGrid, setShowEmojiGrid] = React.useState(false);
+    const emojiInputRef = React.useRef(null);
+    const emojiGridRef = React.useRef(null);
+
     React.useEffect(() => {
         async function fetchUserInfo() {
             const habits = await getInfoByField(userName, 'habits');
@@ -22,7 +27,14 @@ export function MyHabits({ userName }) {
                 setIsInitialized(true);
             }
         }
+        const fetchEmojis = async () => {
+            const res = await fetch('https://emojihub.yurace.pro/api/all');
+            const data = await res.json();
+            setEmojis(data);
+        };
+
         fetchUserInfo();
+        fetchEmojis();
     }, []);
 
     React.useEffect(() => {
@@ -104,6 +116,32 @@ export function MyHabits({ userName }) {
         );
     }
   
+    // Hide emoji grid when clicking outside
+    React.useEffect(() => {
+        function handleClickOutside(event) {
+            if (
+                emojiGridRef.current &&
+                !emojiGridRef.current.contains(event.target) &&
+                emojiInputRef.current &&
+                !emojiInputRef.current.contains(event.target)
+            ) {
+                setShowEmojiGrid(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    function decodeHtml(html) {
+        const txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
+    }
+
+    function handleEmojiClick(char) {
+        setNewHabitEmoji(newHabitEmoji + char);
+        setShowEmojiGrid(false);
+    }
 
     return (
         <main className="container-fluid my_habits">
@@ -134,14 +172,40 @@ export function MyHabits({ userName }) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                     <div className="modal-body">
-                        <form method="get">
+                        <form autoComplete="off">
                             <div className="input-group mb-3">
                                 <label htmlFor="habit-name" className="input-group-text">Habit Name</label>
                                 <input className="form-control" type="text" placeholder="ex. Drink Water" onChange={(e) => setNewHabitName(e.target.value)} />
                             </div>
                             <div className="input-group mb-3">
                                 <label htmlFor="habit-emoji" className="input-group-text">Emoji</label>
-                                <input className="form-control" type="text" placeholder="ex. 💧" onChange={(e) => setNewHabitEmoji(e.target.value)} />
+                                {/* <input className="form-control" type="text" placeholder="ex. 💧" onChange={(e) => setNewHabitEmoji(e.target.value)} /> */}
+                                <input
+                                    id="emoji-input"
+                                    className="form-control"
+                                    ref={emojiInputRef}
+                                    value={newHabitEmoji}
+                                    onChange={(e) => setNewHabitEmoji(e.target.value)}
+                                    onFocus={() => setShowEmojiGrid(true)}
+                                    placeholder="ex. 💧"
+                                    autoComplete="off"
+                                />
+                                {showEmojiGrid && (
+                                    <div ref={emojiGridRef}>
+                                        {emojis.slice(0, 100).map((emoji, idx) => (
+                                        <span
+                                            key={emoji.name || idx}
+                                            className="emoji-item"
+                                            onClick={() => handleEmojiClick(decodeHtml(emoji.htmlCode[0]))}
+                                            title={emoji.name}
+                                            onMouseOver={e => (e.currentTarget.style.background = '#f0f0f0')}
+                                            onMouseOut={e => (e.currentTarget.style.background = '')}
+                                        >
+                                            {decodeHtml(emoji.htmlCode[0])}
+                                        </span>
+                                        ))}
+                                    </div>
+                                    )}
                             </div>
                             <div className="input-group mb-3">
                                 <label htmlFor="habit-goal" className="input-group-text">Daily Goal</label>
