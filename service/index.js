@@ -170,3 +170,7 @@ const port = 4000;
 app.listen(port, function () {
     console.log(`Listening on port ${port}`);
 });
+
+app.get(/.*/, (req, res) => {
+    res.sendFile('index.html', { root: 'public' });
+});
