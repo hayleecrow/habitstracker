@@ -52,7 +52,8 @@ export async function getInfoByField(userName, field) {
         },
     });
     console.log(`getInfoByField response for field ${field}:`, response);
-    return response;
+    const body = await response.json();
+    return body;
 }
 
 export async function updateUserInfo(userName, field, value) { 
