@@ -14,9 +14,25 @@ export default function App() {
     const currentAuthState = user ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
 
+    React.useEffect(() => {
+        handleRefresh();
+    }, []);
+
     function onAuthChange(userName, newAuthState) {
         setUser(userName);
         setAuthState(newAuthState);
+    }
+
+    async function handleRefresh() {
+        const res = await fetch('/api/user/me');
+        const data = res.ok ? await res.json() : null;
+        if (data) {
+            setUser(data.userName);
+            setAuthState(AuthState.Authenticated);
+        } else {
+            setUser('');
+            setAuthState(AuthState.Unauthenticated);
+        }
     }
 
     return (
