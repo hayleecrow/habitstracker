@@ -179,7 +179,6 @@ export function MyHabits({ userName }) {
                             </div>
                             <div className="input-group mb-3">
                                 <label htmlFor="habit-emoji" className="input-group-text">Emoji</label>
-                                {/* <input className="form-control" type="text" placeholder="ex. 💧" onChange={(e) => setNewHabitEmoji(e.target.value)} /> */}
                                 <input
                                     id="emoji-input"
                                     className="form-control"
@@ -191,7 +190,7 @@ export function MyHabits({ userName }) {
                                     autoComplete="off"
                                 />
                                 {showEmojiGrid && (
-                                    <div ref={emojiGridRef}>
+                                    <div id="emoji-grid" ref={emojiGridRef}>
                                         {emojis.slice(0, 100).map((emoji, idx) => (
                                         <span
                                             key={emoji.name || idx}

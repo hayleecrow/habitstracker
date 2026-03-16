@@ -14,3 +14,31 @@ h2 {
 #overall-streak {
     float: right;
 }
+
+#emoji-input {
+    width: 200px;
+    padding: 8px;
+}
+
+#emoji-grid {
+    position: 'absolute';
+    background: '#fff';
+    border: '1px solid #ccc';
+    border-radius: 8;
+    max-height: 220;
+    overflow-y: 'auto';
+    z-index: 100;
+    display: 'grid';
+    grid-template-columns: 'repeat(auto-fill, minmax(40px, 1fr))';
+    gap: 8;
+    padding: 12;
+    width: 200;
+    box-shadow: '0 2px 8px rgba(0,0,0,0.08)'
+}
+
+.emoji-item {
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
