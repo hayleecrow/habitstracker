@@ -13,7 +13,7 @@ if [[ -z "$key" || -z "$hostname" || -z "$service" ]]; then
     exit 1
 fi
 
-printf "\n----> Deploying React bundle $service to $hostname with $key\n"
+printf "\n----> Deploying Service bundle $service to $hostname with $key\n"
 
 # Step 1
 printf "\n----> Build the distribution package\n"
