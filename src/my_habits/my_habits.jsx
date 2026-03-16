@@ -106,54 +106,56 @@ export function MyHabits({ userName }) {
   
 
     return (
-    <main className="container-fluid my_habits">
-        <h1>My Habits</h1>
-        <div className="user-info">
-            <h2 id="name">{userName}</h2>
+        <main className="container-fluid my_habits">
+            <h1>My Habits</h1>
+            <div className="user-info">
+                <h2 id="name">{userName}</h2>
                 <h2 id="overall-streak">Overall Streak: {overallStreak.value}<span className="fire">🔥</span></h2>
-        </div>
-        <table className="table table-warning">
-            <thead className="table-dark">
-                <tr>
-                    <th>Streak</th>
-                    <th>Habit</th>
-                    <th>Goal</th>
-                    <th>Completed</th>
-                </tr>
-            </thead>
-            <tbody id="habits">{habitRows}</tbody>
-        </table>
-        <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#create_new_habit">Add Habit +</button>
-        
-        {/* Popup Modal Window */}
-        <div className="modal fade" id="create_new_habit" tabIndex="-1" aria-labelledby="newHabit" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="newHabit">New Habit</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <table className="table table-warning">
+                <thead className="table-dark">
+                    <tr>
+                        <th>Streak</th>
+                        <th>Habit</th>
+                        <th>Goal</th>
+                        <th>Completed</th>
+                    </tr>
+                </thead>
+                <tbody id="habits">{habitRows}</tbody>
+            </table>
+            <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#create_new_habit">Add Habit +</button>
+            
+            {/* Popup Modal Window */}
+            <div className="modal fade" id="create_new_habit" tabIndex="-1" aria-labelledby="newHabit" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="newHabit">New Habit</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div className="modal-body">
+                        <form method="get">
+                            <div className="input-group mb-3">
+                                <label htmlFor="habit-name" className="input-group-text">Habit Name</label>
+                                <input className="form-control" type="text" placeholder="ex. Drink Water" onChange={(e) => setNewHabitName(e.target.value)} />
+                            </div>
+                            <div className="input-group mb-3">
+                                <label htmlFor="habit-emoji" className="input-group-text">Emoji</label>
+                                <input className="form-control" type="text" placeholder="ex. 💧" onChange={(e) => setNewHabitEmoji(e.target.value)} />
+                            </div>
+                            <div className="input-group mb-3">
+                                <label htmlFor="habit-goal" className="input-group-text">Daily Goal</label>
+                                <input className="form-control" type="text" placeholder="ex. 32 oz" onChange={(e) => setNewHabitGoal(e.target.value)} />
+                            </div>
+                        </form>
                     </div>
-                <div className="modal-body">
-                    <form method="get">
-                        <div className="input-group mb-3">
-                            <input className="form-control" type="text" placeholder="Habit Name" onChange={(e) => setNewHabitName(e.target.value)} />
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={addHabit}>Save</button>
                         </div>
-                        {/* Third party API will be integrated here for emoji selection */}
-                        <div className="input-group mb-3">
-                            <input className="form-control" type="text" placeholder="Emoji" onChange={(e) => setNewHabitEmoji(e.target.value)} />
-                        </div>
-                        <div className="input-group mb-3">
-                            <input className="form-control" type="text" placeholder="Daily Goal (ex. 15 min or 30 oz)" onChange={(e) => setNewHabitGoal(e.target.value)} />
-                        </div>
-                    </form>
-                </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={addHabit}>Save</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
   );
 }
