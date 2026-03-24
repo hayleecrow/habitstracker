@@ -11,7 +11,7 @@ const userCollection = db.collection('users');
 (async function testConnection() {
   try {
     await db.command({ ping: 1 });
-    console.log(`DB connection successful to ${config.hostname}`);
+    console.log(`Connected to Database`);
   } catch (ex) {
     console.log(`Unable to connect to database because ${ex.message}`);
     process.exit(1);
