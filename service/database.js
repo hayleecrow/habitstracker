@@ -38,10 +38,15 @@ async function updateUserRemoveAuth(user) {
   await userCollection.updateOne({ "userName": user.userName }, { $unset: { "token": 1 } });
 }
 
+async function updateUserHabits(user) {
+  result = await userCollection.updateOne({ "userName": user.userName }, { $set: { "habits": user.habits } });
+}
+
 module.exports = {
     getUser,
     getUserByToken,
     addUser,
     updateUser,
-    updateUserRemoveAuth
+    updateUserRemoveAuth,
+    updateUserHabits
 }
