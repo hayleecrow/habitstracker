@@ -6,7 +6,6 @@ export async function registerUser(userName, password) {
         },
         body: JSON.stringify({ "userName": userName, "password": password })
     });
-    console.log('registerUser response:', response);
     return response;
 }
 
@@ -18,7 +17,6 @@ export async function loginUserService(userName, password) {
         },
         body: JSON.stringify({ "userName": userName, "password": password })
     });
-    console.log('loginUserService response:', response);
     return response;
 }
 
@@ -29,7 +27,6 @@ export async function logoutUserService() {
             'Content-Type': 'application/json'
         }
     });
-    console.log('logoutUserService response:', response);
     return response;
 }
 
@@ -40,7 +37,6 @@ export async function getAllUserInfo(userName) {
             'Content-Type': 'application/json'
         },
     });
-    console.log('getAllUserInfo response:', response);
     return response;
 }
 
@@ -51,7 +47,6 @@ export async function getInfoByField(userName, field) {
             'Content-Type': 'application/json'
         },
     });
-    console.log(`getInfoByField response for field ${field}:`, response);
     const body = await response.json();
     return body;
 }
@@ -64,6 +59,5 @@ export async function updateUserInfo(userName, field, value) {
         },
         body: JSON.stringify({ "userName": userName, [field]: value })
     });
-    console.log(`updateUserInfo response for field ${field}:`, response);
     return response;
 }
