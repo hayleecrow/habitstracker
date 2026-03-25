@@ -19,11 +19,11 @@ const userCollection = db.collection('users');
 })();
 
 function getUser(userName) {
-  return userCollection.findOne({ userName: userName });
+  return userCollection.findOne({ "userName": userName });
 }
 
 function getUserByToken(token) {
-  return userCollection.findOne({ token: token });
+  return userCollection.findOne({ "token": token });
 }
 
 async function addUser(user) {
@@ -31,11 +31,11 @@ async function addUser(user) {
 }
 
 async function updateUser(user) {
-  await userCollection.updateOne({ userName: user.userName }, { $set: user });
+  result = await userCollection.updateOne({ "userName": user.userName }, { $set: user });
 }
 
 async function updateUserRemoveAuth(user) {
-  await userCollection.updateOne({ userName: user.userName }, { $unset: { token: 1 } });
+  await userCollection.updateOne({ "userName": user.userName }, { $unset: { "token": 1 } });
 }
 
 module.exports = {
