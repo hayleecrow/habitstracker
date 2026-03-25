@@ -28,7 +28,7 @@ async function createUser(userName, password) {
 function getUser(field, value) { 
     if (!value) return null;
 
-    if (field === "token") { 
+    if (field === 'token') { 
         return DB.getUserByToken(value);
     }
     return DB.getUser(value);
@@ -43,8 +43,8 @@ function setAuthCookie(res, user) {
     });
 }
 
-function getInfoForUser(token, field) {
-    const user = getUser('token', token);
+async function getInfoForUser(token, field) {
+    const user = await getUser('token', token);
     return user ? user[field] : null;
 }
 
@@ -88,8 +88,6 @@ app.get('/api/user/me', async (req, res) => {
     const user = await getUser('token', token);
     if (user) {
         res.send({ userName: user.userName });
-    } else {
-        res.status(401).send({ msg: 'Unauthorized' });
     }
 });
 
@@ -115,7 +113,7 @@ app.get('/api/habits/get', verifyAuth, async (req, res) => {
 });
 
 app.post('/api/habits/add', verifyAuth, async (req, res) => {
-    const user = getUser('token', req.cookies['token']);
+    const user = await getUser('token', req.cookies['token']);
     if (user) {
         user.habits = req.body.habits;
         await DB.updateUser(user);
@@ -159,6 +157,7 @@ app.post('/api/friends/add', verifyAuth, async (req, res) => {
     const user = await getUser('token', req.cookies['token']);
     if (user) {
         user.friends = req.body.friends;
+        await DB.updateUser(user);
         res.send(user.friends);
     } else {
         res.status(400).send({ message: 'User does not exist' });
