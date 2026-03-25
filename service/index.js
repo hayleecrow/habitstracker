@@ -9,8 +9,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 
-let users = [];
-
 async function createUser(userName, password) { 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -19,33 +17,30 @@ async function createUser(userName, password) {
         password: hashedPassword,
         habits: [],
         overallStreak: { value: 0, completedToday: false },
-        friends: []
+        friends: [],
+        token: uuid.v4()
     };
-    users.push(user);
+    await DB.addUser(user);
+
     return user;
 }
 
 function getUser(field, value) { 
-    if (value) { 
-        return users.find((user) => user[field] === value);
+    if (!value) return null;
+
+    if (field === "token") { 
+        return DB.getUserByToken(value);
     }
-    return null;
+    return DB.getUser(value);
 }
 
 // Create a token for the user and send a cookie containing the token
 function setAuthCookie(res, user) { 
-    user.token = uuid.v4();
-
     res.cookie('token', user.token, {
         secure: true,
         httpOnly: true,
         sameSite: 'strict',
     });
-}
-
-function clearAuthCookie(res, user) { 
-    delete user.token;
-    res.clearCookie('token');
 }
 
 function getInfoForUser(token, field) {
@@ -68,10 +63,12 @@ app.post('/api/auth', async (req, res) => {
 app.put('/api/auth', async (req, res) => { 
     const user = await getUser('userName', req.body.userName);
     if (user && await bcrypt.compare(req.body.password, user.password)) { 
+        user.token = uuid.v4();
+        await DB.updateUser(user);
         setAuthCookie(res, user);
         res.send({ userName: user.userName });
     } else {
-        res.status(400).send({ message: 'Unauthorized' });
+        res.status(401).send({ message: 'Unauthorized' });
     }
 });
 
@@ -79,8 +76,9 @@ app.delete('/api/auth', async (req, res) => {
     const token = req.cookies['token'];
     const user = await getUser('token', token);
     if (user) { 
-        clearAuthCookie(res, user);
+        await DB.updateUserRemoveAuth(user);
     }
+    res.clearCookie('token');
     res.send({});
 });
 
@@ -120,6 +118,7 @@ app.post('/api/habits/add', verifyAuth, async (req, res) => {
     const user = getUser('token', req.cookies['token']);
     if (user) {
         user.habits = req.body.habits;
+        await DB.updateUser(user);
         res.send(user.habits);
     }
     else {
@@ -140,6 +139,7 @@ app.post('/api/overallStreak/add', verifyAuth, async (req, res) => {
     const user = await getUser('token', req.cookies['token']);
     if (user) {
         user.overallStreak = req.body.overallStreak;
+        await DB.updateUser(user);
         res.send(user.overallStreak);
     } else {
         res.status(400).send({ message: 'User does not exist' });
