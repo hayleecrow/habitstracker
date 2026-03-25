@@ -116,7 +116,7 @@ app.post('/api/habits/add', verifyAuth, async (req, res) => {
     const user = await getUser('token', req.cookies['token']);
     if (user) {
         user.habits = req.body.habits;
-        await DB.updateUser(user);
+        await DB.updateUserHabits(user);
         res.send(user.habits);
     }
     else {
