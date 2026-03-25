@@ -39,9 +39,9 @@ export default function App() {
         <BrowserRouter>
             <div className="body">
                 <header className="container-fluid">
-                    <img className="logo" alt="Habit Go logo" src="habit_tracker_logo_transparent.png"/>
+                    <img className="logo" alt="Habits Go logo" src="habit_tracker_logo_transparent.png"/>
                     <nav className="navbar navbar-dark">
-                        <NavLink className="navbar-brand text-reset" to="">Habit Go<sup>&reg;</sup></NavLink>
+                        <NavLink className="navbar-brand text-reset" to="">Habits Go<sup>&reg;</sup></NavLink>
                         <menu className="navbar-nav">
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="">{ authState === AuthState.Unauthenticated ? 'Login' : 'Logout' }</NavLink>

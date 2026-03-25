@@ -46,7 +46,7 @@ export function Login({ user, authState, onAuthChange }) {
 
     return (
     <main className="container-fluid">
-        <h1>Welcome to Habit Go!</h1>
+        <h1>Welcome to Habits Go!</h1>
         {authState === AuthState.Unauthenticated && (
             <form>
                 <div className="input-group mb-3">
