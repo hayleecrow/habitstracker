@@ -137,7 +137,7 @@ app.post('/api/overallStreak/add', verifyAuth, async (req, res) => {
     const user = await getUser('token', req.cookies['token']);
     if (user) {
         user.overallStreak = req.body.overallStreak;
-        await DB.updateUser(user);
+        await DB.updateUserOverallStreak(user);
         res.send(user.overallStreak);
     } else {
         res.status(400).send({ message: 'User does not exist' });
@@ -157,7 +157,7 @@ app.post('/api/friends/add', verifyAuth, async (req, res) => {
     const user = await getUser('token', req.cookies['token']);
     if (user) {
         user.friends = req.body.friends;
-        await DB.updateUser(user);
+        await DB.updateUserFriends(user);
         res.send(user.friends);
     } else {
         res.status(400).send({ message: 'User does not exist' });
