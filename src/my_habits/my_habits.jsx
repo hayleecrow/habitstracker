@@ -1,6 +1,6 @@
 import React from 'react';
 import './my_habits.css';
-import { getAllUserInfo, getInfoByField, updateUserInfo } from '../service';
+import { getInfoByField, updateUserInfo } from '../service';
 // import schedule from 'node-schedule';
 
 export function MyHabits({ userName }) {
