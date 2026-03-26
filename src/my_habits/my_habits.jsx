@@ -19,8 +19,8 @@ export function MyHabits({ userName }) {
 
     React.useEffect(() => {
         async function fetchUserInfo() {
-            const habits = await getInfoByField(userName, 'habits');
-            const overallStreak = await getInfoByField(userName, 'overallStreak');
+            const habits = await getInfoByField('habits');
+            const overallStreak = await getInfoByField('overallStreak');
             setHabits(habits);
             setOverallStreak(overallStreak);
             if (habits && overallStreak) {
