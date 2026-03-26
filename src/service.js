@@ -1,5 +1,5 @@
 export async function registerUser(userName, password) { 
-    const response = await fetch('/api/auth', {
+    const response = await fetch('/api/auth/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -10,7 +10,7 @@ export async function registerUser(userName, password) {
 }
 
 export async function loginUserService(userName, password) {
-    const response = await fetch('/api/auth', {
+    const response = await fetch('/api/auth/login', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export async function loginUserService(userName, password) {
 }
 
 export async function logoutUserService() {
-    const response = await fetch('/api/auth', {
+    const response = await fetch('/api/auth/logout', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -30,17 +30,7 @@ export async function logoutUserService() {
     return response;
 }
 
-export async function getAllUserInfo(userName) {
-    const response = await fetch(`/api/user/${userName}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    });
-    return response;
-}
-
-export async function getInfoByField(userName, field) {
+export async function getInfoByField(field) {
     const response = await fetch(`/api/${field}/get`, {
         method: 'GET',
         headers: {
