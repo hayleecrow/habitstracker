@@ -50,7 +50,7 @@ async function getInfoForUser(token, field) {
 
 // Login Endpoints
 
-app.post('/api/auth', async (req, res) => {
+app.post('/api/auth/create', async (req, res) => {
     if (await getUser('userName', req.body.userName)) {
         res.status(400).send({ message: 'User already exists' });
     } else { 
@@ -60,7 +60,7 @@ app.post('/api/auth', async (req, res) => {
     }
 });
 
-app.put('/api/auth', async (req, res) => { 
+app.put('/api/auth/login', async (req, res) => { 
     const user = await getUser('userName', req.body.userName);
     if (user && await bcrypt.compare(req.body.password, user.password)) { 
         user.token = uuid.v4();
@@ -72,7 +72,7 @@ app.put('/api/auth', async (req, res) => {
     }
 });
 
-app.delete('/api/auth', async (req, res) => { 
+app.delete('/api/auth/logout', async (req, res) => { 
     const token = req.cookies['token'];
     const user = await getUser('token', token);
     if (user) { 
