@@ -42,11 +42,21 @@ async function updateUserHabits(user) {
   result = await userCollection.updateOne({ "userName": user.userName }, { $set: { "habits": user.habits } });
 }
 
+async function updateUserOverallStreak(user) {
+  result = await userCollection.updateOne({ "userName": user.userName }, { $set: { "overallStreak": user.overallStreak } });
+}
+
+async function updateUserFriends(user) {
+  result = await userCollection.updateOne({ "userName": user.userName }, { $set: { "friends": user.friends } });
+}
+
 module.exports = {
     getUser,
     getUserByToken,
     addUser,
     updateUser,
     updateUserRemoveAuth,
-    updateUserHabits
+    updateUserHabits,
+    updateUserOverallStreak,
+    updateUserFriends
 }
