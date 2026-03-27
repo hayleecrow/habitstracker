@@ -19,11 +19,16 @@ const userCollection = db.collection('users');
 })();
 
 function getUser(userName) {
+  // might be an unnecessary function in the future
   return userCollection.findOne({ "userName": userName });
 }
 
 function getUserByToken(token) {
   return userCollection.findOne({ "token": token });
+}
+
+function getAllUsers() {
+  return userCollection.find().toArray();
 }
 
 async function addUser(user) {
@@ -51,12 +56,13 @@ async function updateUserFriends(user) {
 }
 
 module.exports = {
-    getUser,
-    getUserByToken,
-    addUser,
-    updateUser,
-    updateUserRemoveAuth,
-    updateUserHabits,
-    updateUserOverallStreak,
-    updateUserFriends
+  getUser,
+  getUserByToken,
+  addUser,
+  updateUser,
+  updateUserRemoveAuth,
+  updateUserHabits,
+  updateUserOverallStreak,
+  updateUserFriends,
+  getAllUsers
 }
