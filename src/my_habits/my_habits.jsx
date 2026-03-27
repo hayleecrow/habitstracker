@@ -1,7 +1,6 @@
 import React from 'react';
 import './my_habits.css';
 import { getInfoByField, updateUserInfo } from '../service';
-// import schedule from 'node-schedule';
 
 export function MyHabits({ userName }) {
     const [habits, setHabits] = React.useState([]);
@@ -43,27 +42,6 @@ export function MyHabits({ userName }) {
             updateUserInfo(userName, 'overallStreak', overallStreak);
         }
     }, [habits, overallStreak, isInitialized]);
-
-    // reset habits at midnight and update streaks accordingly
-    // schedule.scheduleJob('0 0 * * *', () => { resetHabits });
-    function resetHabits() {
-        // const now = new Date();
-        // if (now.getHours() === 0 && now.getMinutes() === 0) {
-        const updatedHabits = habits.map(habit => {
-            if (!habit.completedToday) {
-                habit.streak = 0;
-            }
-            habit.completedToday = false;
-            return habit;
-        });
-        setHabits(updatedHabits);
-
-        if (habits.some(habit => !habit.completedToday)) {
-            setOverallStreak({ value: 0, completedToday: false });
-        } else {
-            setOverallStreak({ value: overallStreak.value, completedToday: false });
-        }
-    }
 
     function addHabit() {
         const newHabit = {
