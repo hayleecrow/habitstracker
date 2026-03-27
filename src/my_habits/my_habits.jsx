@@ -111,7 +111,7 @@ export function MyHabits({ userName }) {
     } else {
         habitRows.push(
         <tr key='0'>
-            <td colSpan='4' style={{textAlign: "center"}}>Add a habit to beginning tracking your goals!</td>
+            <td colSpan='4' style={{textAlign: "center"}}>Add a habit to begin tracking your goals!</td>
         </tr>
         );
     }
