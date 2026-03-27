@@ -2,12 +2,44 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
+const schedule = require('node-schedule');
 const app = express();
 const DB = require('./database.js');
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
+
+// This function will reset the completedToday field for all habits and increment the overall streak if the user completed their habits for the day
+// 0 0 * * * corresponds to every day at midnight
+const resetHabitsJob = schedule.scheduleJob('0 0 * * *', () => {
+    console.log('It\'s midnight!!');
+    resetHabits();
+});
+
+async function resetHabits() {
+    const users = await DB.getAllUsers();
+    for (const user of users) { 
+        if (user.habits.every(habit => habit.completedToday)) {
+            user.overallStreak.completedToday = false;
+        } else {
+            user.overallStreak.value = 0;
+            user.overallStreak.completedToday = false;
+        }
+        DB.updateUserOverallStreak(user);
+
+        for (const habit of user.habits) {
+            if (!habit.completedToday) {
+                habit.streak = 0;
+                habit.completedToday = false;
+            } else {
+                habit.completedToday = false;
+            }
+        }
+        DB.updateUserHabits(user);
+    }
+    console.log('Habits reset!');
+}
 
 async function createUser(userName, password) { 
     const hashedPassword = await bcrypt.hash(password, 10);
