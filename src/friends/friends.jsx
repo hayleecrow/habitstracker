@@ -115,10 +115,8 @@ export function Friends({ userName }) {
                     <div className="modal-body">
                         <form method="get">
                             <div className="input-group mb-3">
-                                <input className="form-control" type="text" placeholder="Friend's Name" onChange={(e) => setNewFriendName(e.target.value)} />
-                            </div>
-                            <div className="input-group mb-3">
-                                <input className="form-control" type="text" placeholder="Friend's Email" onChange={(e) => setNewFriendEmail(e.target.value)} />
+                                <label htmlFor="friend-username" className="input-group-text">Friend's Username</label>
+                                <input className="form-control" type="text" onChange={(e) => setNewFriendName(e.target.value)} />
                             </div>
                         </form>
                     </div>
