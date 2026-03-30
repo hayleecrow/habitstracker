@@ -13,9 +13,9 @@ export function Friends({ userName }) {
 
     React.useEffect(() => {
         async function fetchUserInfo() {
-            const habits = await getInfoByField(userName, 'habits');
-            const overallStreak = await getInfoByField(userName, 'overallStreak');
-            const friends = await getInfoByField(userName, 'friends');
+            const habits = await getInfoByField('habits');
+            const overallStreak = await getInfoByField('overallStreak');
+            const friends = await getInfoByField('friends');
             setHabits(habits);
             setOverallStreak(overallStreak);
             setFriends(friends);
