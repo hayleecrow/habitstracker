@@ -5,11 +5,10 @@ import { getInfoByField, updateUserInfo } from '../service';
 export function Friends({ userName }) {
     const [habits, setHabits] = React.useState([]);
     const [overallStreak, setOverallStreak] = React.useState({});
-    const [isInitialized, setIsInitialized] = React.useState(false);
     const [friends, setFriends] = React.useState([]);
+    const [isInitialized, setIsInitialized] = React.useState(false);
 
-    const [newFriendName, setNewFriendName] = React.useState('');
-    const [newFriendEmail, setNewFriendEmail] = React.useState('');
+    const [newFriendUsername, setNewFriendUsername] = React.useState('');
 
     React.useEffect(() => {
         async function fetchUserInfo() {
@@ -28,16 +27,16 @@ export function Friends({ userName }) {
 
     React.useEffect(() => {
         if (isInitialized) {
-            updateUserInfo(userName, 'friends', friends);
+            // only pass friends usernames to database, not their habits and streaks
+            const friendsUsernames = friends.map(friend => ({ name: friend.name }));
+            updateUserInfo(userName, 'friends', friendsUsernames);
         }
     }, [friends, isInitialized]);
 
     function addFriend() {
+        // get friend user from database to verify that they exist before adding to friends list and get their info and add to local friends list
         const newFriend = {
-            name: newFriendName,
-            email: newFriendEmail,
-            overallStreak: 0,
-            habits: []
+            name: newFriendUsername,
         };
 
         const updatedFriends = [...friends, newFriend];
@@ -116,7 +115,7 @@ export function Friends({ userName }) {
                         <form method="get">
                             <div className="input-group mb-3">
                                 <label htmlFor="friend-username" className="input-group-text">Friend's Username</label>
-                                <input className="form-control" type="text" onChange={(e) => setNewFriendName(e.target.value)} />
+                                <input className="form-control" type="text" onChange={(e) => setNewFriendUsername(e.target.value)} />
                             </div>
                         </form>
                     </div>
