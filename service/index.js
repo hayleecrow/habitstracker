@@ -75,7 +75,7 @@ function setAuthCookie(res, user) {
     });
 }
 
-async function getInfoForUser(token, field) {
+async function getInfoByToken(token, field) {
     const user = await getUser('token', token);
     return user ? user[field] : null;
 }
@@ -136,7 +136,7 @@ const verifyAuth = async (req, res, next) => {
 // Habits Endpoints
 
 app.get('/api/habits/get', verifyAuth, async (req, res) => {
-    const habits = await getInfoForUser(req.cookies['token'], 'habits');
+    const habits = await getInfoByToken(req.cookies['token'], 'habits');
     if (habits != null) {
         res.send(habits);
     } else {
@@ -157,7 +157,7 @@ app.post('/api/habits/add', verifyAuth, async (req, res) => {
 });
 
 app.get('/api/overallStreak/get', verifyAuth, async (req, res) => {
-    const overallStreak = await getInfoForUser(req.cookies['token'], 'overallStreak');
+    const overallStreak = await getInfoByToken(req.cookies['token'], 'overallStreak');
     if (overallStreak != null) {
         res.send(overallStreak);
     } else {
@@ -177,9 +177,20 @@ app.post('/api/overallStreak/add', verifyAuth, async (req, res) => {
 });
 
 app.get('/api/friends/get', verifyAuth, async (req, res) => {
-    const friends = await getInfoForUser(req.cookies['token'], 'friends');
+    const friends = await getInfoByToken(req.cookies['token'], 'friends');
     if (friends != null) {
-        res.send(friends);
+        // for each friend, get their overall streak and habits from the database and add to friend object
+        const friendsInfo = [];
+        for (const friend of friends) {
+            const friendUser = await getUser('userName', friend.name);
+            if (friendUser) {
+                friendsInfo.push(friendUser);
+            } else {
+                // error handling if friend user doesn't exist, for now just skip that friend
+                console.log(`Friend user ${friend} does not exist`);
+            }
+        }
+        res.send(friendsInfo);
     } else {
         res.status(400).send({ message: 'User does not exist' });
     }
