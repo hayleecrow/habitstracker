@@ -19,7 +19,6 @@ const userCollection = db.collection('users');
 })();
 
 function getUser(userName) {
-  // might be an unnecessary function in the future
   return userCollection.findOne({ "userName": userName });
 }
 
