@@ -51,3 +51,13 @@ export async function updateUserInfo(userName, field, value) {
     });
     return response;
 }
+
+export async function checkUserExists(userName) {
+    const response = await fetch('/api/auth/checkUser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ "userName": userName }),
+    });
+    const data = await response.json();
+    return data.exists;
+}
