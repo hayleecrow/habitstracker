@@ -114,6 +114,12 @@ app.delete('/api/auth/logout', async (req, res) => {
     res.send({});
 });
 
+// Username existence check endpoint for friend adding
+app.post('/api/auth/checkUser', async (req, res) => {
+    const user = await getUser('userName', req.body.userName);
+    res.send({ exists: !!user });
+});
+
 // getMe
 app.get('/api/user/me', async (req, res) => {
     const token = req.cookies['token'];
@@ -179,12 +185,15 @@ app.post('/api/overallStreak/add', verifyAuth, async (req, res) => {
 app.get('/api/friends/get', verifyAuth, async (req, res) => {
     const friends = await getInfoByToken(req.cookies['token'], 'friends');
     if (friends != null) {
-        // for each friend, get their overall streak and habits from the database and add to friend object
         const friendsInfo = [];
         for (const friend of friends) {
             const friendUser = await getUser('userName', friend.name);
             if (friendUser) {
-                friendsInfo.push(friendUser);
+                friendsInfo.push({
+                    name: friendUser.userName,
+                    overallStreak: friendUser.overallStreak,
+                    habits: friendUser.habits
+                });
             } else {
                 // error handling if friend user doesn't exist, for now just skip that friend
                 console.log(`Friend user ${friend} does not exist`);
