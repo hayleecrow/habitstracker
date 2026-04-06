@@ -1,6 +1,7 @@
 import React from 'react';
 import './friends.css';
-import { getInfoByField, updateUserInfo } from '../service';
+import { getInfoByField, updateUserInfo, checkUserExists } from '../service';
+
 
 export function Friends({ userName }) {
     const [habits, setHabits] = React.useState([]);
@@ -9,6 +10,8 @@ export function Friends({ userName }) {
     const [isInitialized, setIsInitialized] = React.useState(false);
 
     const [newFriendUsername, setNewFriendUsername] = React.useState('');
+    const [addFriendError, setAddFriendError] = React.useState('');
+
 
     React.useEffect(() => {
         async function fetchUserInfo() {
@@ -33,14 +36,25 @@ export function Friends({ userName }) {
         }
     }, [friends, isInitialized]);
 
-    function addFriend() {
-        // get friend user from database to verify that they exist before adding to friends list and get their info and add to local friends list
-        const newFriend = {
-            name: newFriendUsername,
-        };
 
-        const updatedFriends = [...friends, newFriend];
+    async function addFriend() {
+        setAddFriendError(''); // might not need
+
+        // Check if user exists
+        const exists = await checkUserExists(newFriendUsername);
+        if (!exists) {
+            setAddFriendError('User does not exist');
+            return;
+        }
+        // Proceed to add friend
+        const updatedFriends = [...friends, { name: newFriendUsername }];
         setFriends(updatedFriends);
+        setNewFriendUsername(''); // Clear input field
+        // // Close modal programmatically -- would like to eventually not have to programmatically do it or manually reload page
+        // const modal = document.getElementById('add_new_friend');
+        // const modalInstance = window.bootstrap.Modal.getInstance(modal);
+        // modalInstance.hide();
+        location.reload(); // Temporary solution to update friend's habits and streaks immediately after adding (will be fixed with websockets)
     }
 
     const habitBulletpts = [];
@@ -62,15 +76,20 @@ export function Friends({ userName }) {
             friendRows.push(
                 <tr key={friend.name}>
                     <td>{friend.name}</td>
-                    <td>{friend.overallStreak}<span className="fire">🔥</span></td>
+                    <td>{friend.overallStreak?.value}<span className="fire">🔥</span></td>
                     <td>
                         <ul>
+                            {friend.habits && friend.habits.map(habit => (
+                                <li key={habit.habitName}>
+                                    {habit.emoji} {habit.habitName} - Streak: {habit.streak}<span className="fire">🔥</span>
+                                </li>
+                            ))}
                         </ul>
                     </td>
                 </tr>
-            )
-        };
-    } else { 
+            );
+        }
+    } else {
         friendRows.push(
             <tr key='0'>
                 <td colSpan='3' style={{textAlign: "center"}}>Add some friends to see their habits and streaks!</td>
@@ -117,11 +136,12 @@ export function Friends({ userName }) {
                                 <label htmlFor="friend-username" className="input-group-text">Friend's Username</label>
                                 <input className="form-control" type="text" onChange={(e) => setNewFriendUsername(e.target.value)} />
                             </div>
+                            {addFriendError && <div className="text-danger">{addFriendError}</div>}
                         </form>
                     </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={addFriend}>Save</button>
+                            <button type="button" className="btn btn-primary" onClick={addFriend}>Save</button>
                         </div>
                     </div>
                 </div>
