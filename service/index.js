@@ -5,6 +5,7 @@ const uuid = require('uuid');
 const schedule = require('node-schedule');
 const app = express();
 const DB = require('./database.js');
+const { peerProxy } = require('./peerProxy.js');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -217,9 +218,11 @@ app.post('/api/friends/add', verifyAuth, async (req, res) => {
 });
 
 const port = 4000;
-app.listen(port, function () {
+const httpService = app.listen(port, function () {
     console.log(`Listening on port ${port}`);
 });
+
+peerProxy(httpService);
 
 app.get(/.*/, (req, res) => {
     res.sendFile('index.html', { root: 'public' });
