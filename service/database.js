@@ -5,6 +5,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('habitsgo');
 const userCollection = db.collection('users');
+const notificationCollection = db.collection('notifications');
 
 
 // This will asynchronously test the connection and exit the process if it fails
@@ -28,6 +29,10 @@ function getUserByToken(token) {
 
 function getAllUsers() {
   return userCollection.find().toArray();
+}
+
+async function getNotifications(toUser) {
+  return await notificationCollection.find({ toUser }).toArray();
 }
 
 async function addUser(user) {
@@ -54,6 +59,15 @@ async function updateUserFriends(user) {
   result = await userCollection.updateOne({ "userName": user.userName }, { $set: { "friends": user.friends } });
 }
 
+async function addNotification(toUser, fromUser, message) {
+  return await notificationCollection.insertOne({ toUser, fromUser, message });
+}
+
+async function deleteNotification(notificationId) {
+  const { ObjectId } = require('mongodb');
+  return await notificationCollection.deleteOne({ _id: new ObjectId(notificationId) });
+}
+
 module.exports = {
   getUser,
   getUserByToken,
@@ -63,5 +77,8 @@ module.exports = {
   updateUserHabits,
   updateUserOverallStreak,
   updateUserFriends,
-  getAllUsers
+  getAllUsers,
+  addNotification,
+  getNotifications,
+  deleteNotification
 }
