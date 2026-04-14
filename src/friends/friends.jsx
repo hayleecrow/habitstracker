@@ -1,7 +1,6 @@
 import React from 'react';
 import './friends.css';
-import { getInfoByField, updateUserInfo, checkUserExists, deleteNotification, getNotifications } from '../service';
-import * as friendNotifier from '../friendNotifier';
+import { getInfoByField, updateUserInfo, checkUserExists } from '../service';
 
 
 export function Friends({ userName }) {
@@ -12,7 +11,6 @@ export function Friends({ userName }) {
 
     const [newFriendUsername, setNewFriendUsername] = React.useState('');
     const [addFriendError, setAddFriendError] = React.useState('');
-    const [notifications, setNotifications] = React.useState([]);
 
 
     React.useEffect(() => {
@@ -20,13 +18,9 @@ export function Friends({ userName }) {
             const habits = await getInfoByField('habits');
             const overallStreak = await getInfoByField('overallStreak');
             const friends = await getInfoByField('friends');
-            const persistedNotifications = await getNotifications();
             setHabits(habits);
             setOverallStreak(overallStreak);
             setFriends(friends);
-            if (persistedNotifications && persistedNotifications.length > 0) {
-                setNotifications(persistedNotifications);
-            }
             if (habits && overallStreak && friends) {
                 setIsInitialized(true);
             }
@@ -42,42 +36,6 @@ export function Friends({ userName }) {
         }
     }, [friends, isInitialized]);
 
-    // Initialize friendNotifier and subscribe to notifications
-    React.useEffect(() => {
-        if (isInitialized) {
-            friendNotifier.initNotifier(userName);
-
-            // Subscribe to notifications
-            const handleNotification = async (event) => {
-                // Real-time notification received, fetch updated list from server
-                const updatedNotifications = await getNotifications();
-                if (updatedNotifications && updatedNotifications.length > 0) {
-                    setNotifications(updatedNotifications);
-                }
-            };
-
-            friendNotifier.onNotification(handleNotification);
-
-            // Cleanup on unmount
-            return () => {
-                friendNotifier.unsubscribe(handleNotification);
-            };
-        }
-    }, [isInitialized]);
-
-    // Update friends list on WebSocket when friends are loaded
-    React.useEffect(() => {
-        if (isInitialized && friendNotifier.isConnected()) {
-            friendNotifier.updateFriends(friends);
-        }
-    }, [friends, isInitialized]);
-
-    async function handleDismissNotification(notificationId) {
-        // Delete from database
-        await deleteNotification(notificationId);
-        // Remove from UI
-        setNotifications(prev => prev.filter(n => n._id !== notificationId));
-    }
 
     async function addFriend() {
         setAddFriendError(''); // might not need
@@ -187,25 +145,6 @@ export function Friends({ userName }) {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {/* Notification Toasts */}
-            <div className="toast-container position-fixed top-0 end-0 p-3" style={{ zIndex: 11 }}>
-                {notifications.map(notification => (
-                    <div key={notification._id} className="toast show" role="alert">
-                        <div className="toast-header">
-                            <strong className="me-auto">Friend Update</strong>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                onClick={() => handleDismissNotification(notification._id)}
-                            ></button>
-                        </div>
-                        <div className="toast-body">
-                            {notification.message}
-                        </div>
-                    </div>
-                ))}
             </div>
         </main>
     );

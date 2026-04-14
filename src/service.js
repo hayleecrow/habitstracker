@@ -61,20 +61,3 @@ export async function checkUserExists(userName) {
     const data = await response.json();
     return data.exists;
 }
-
-export async function getNotifications() {
-    const response = await fetch('/api/notifications', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-    });
-    const data = await response.json();
-    return data;
-}
-
-export async function deleteNotification(notificationId) {
-    const response = await fetch(`/api/notifications/${notificationId}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
-    });
-    return response;
-}

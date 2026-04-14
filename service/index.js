@@ -11,38 +11,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 
-let socketServer = null; // Will be set by peerProxy
-
-// Helper function to emit events and store notifications for users who have fromUser as friend
-async function broadcastAndStoreEvent(fromUser, eventType, messageText) {
-    try {
-        const users = await DB.getAllUsers();
-        
-        // Find all users who have fromUser in their friends list
-        for (const user of users) {
-            if (user.friends && user.friends.some(friend => friend.name === fromUser)) {
-                // Store notification in database
-                await DB.addNotification(user.userName, fromUser, messageText);
-                
-                // Emit WebSocket event (peerProxy will handle filtering)
-                if (socketServer) {
-                    const wsEvent = JSON.stringify({
-                        type: eventType,
-                        fromUserId: fromUser
-                    });
-                    socketServer.clients.forEach((client) => {
-                        if (client.readyState === 1) { // OPEN
-                            client.send(wsEvent);
-                        }
-                    });
-                }
-            }
-        }
-    } catch (err) {
-        console.error('Error in broadcastAndStoreEvent:', err);
-    }
-}
-
 // This function will reset the completedToday field for all habits and increment the overall streak if the user completed their habits for the day
 // 0 0 * * * corresponds to every day at midnight
 const resetHabitsJob = schedule.scheduleJob('0 0 * * *', () => {
@@ -53,32 +21,22 @@ const resetHabitsJob = schedule.scheduleJob('0 0 * * *', () => {
 async function resetHabits() {
     const users = await DB.getAllUsers();
     for (const user of users) { 
-        let lostHabits = [];
-        
         if (user.habits.every(habit => habit.completedToday)) {
             user.overallStreak.completedToday = false;
         } else {
             user.overallStreak.value = 0;
             user.overallStreak.completedToday = false;
-            
-            // Collect habits that lost their streak
-            for (const habit of user.habits) {
-                if (!habit.completedToday) {
-                    habit.streak = 0;
-                    lostHabits.push(`${habit.emoji} ${habit.habitName}`);
-                } else {
-                    habit.completedToday = false;
-                }
-            }
-            
-            // Emit single streakLost event for all lost habits
-            if (lostHabits.length > 0) {
-                const message = `${user.userName} lost their streak on: ${lostHabits.join(', ')}`;
-                await broadcastAndStoreEvent(user.userName, 'streakLost', message);
+        }
+        DB.updateUserOverallStreak(user);
+
+        for (const habit of user.habits) {
+            if (!habit.completedToday) {
+                habit.streak = 0;
+                habit.completedToday = false;
+            } else {
+                habit.completedToday = false;
             }
         }
-        
-        DB.updateUserOverallStreak(user);
         DB.updateUserHabits(user);
     }
     console.log('Habits reset!');
@@ -196,38 +154,7 @@ app.get('/api/habits/get', verifyAuth, async (req, res) => {
 app.post('/api/habits/add', verifyAuth, async (req, res) => {
     const user = await getUser('token', req.cookies['token']);
     if (user) {
-        const oldHabits = user.habits || [];
-        const newHabits = req.body.habits || [];
-        
-        // Detect completed habits (compare by habitName and check if completedToday changed)
-        for (let i = 0; i < newHabits.length; i++) {
-            const newHabit = newHabits[i];
-            const oldHabit = oldHabits.find(h => h.habitName === newHabit.habitName);
-            
-            if (oldHabit && !oldHabit.completedToday && newHabit.completedToday) {
-                // Habit was just completed
-                const message = `${user.userName} completed their habit: ${newHabit.emoji} ${newHabit.habitName}`;
-                await broadcastAndStoreEvent(user.userName, 'habitComplete', message);
-            }
-        }
-        
-        // Detect deleted habits
-        for (const oldHabit of oldHabits) {
-            if (!newHabits.find(h => h.habitName === oldHabit.habitName)) {
-                const message = `${user.userName} deleted their habit: ${oldHabit.emoji} ${oldHabit.habitName}`;
-                await broadcastAndStoreEvent(user.userName, 'habitDeleted', message);
-            }
-        }
-        
-        // Detect added habits
-        for (const newHabit of newHabits) {
-            if (!oldHabits.find(h => h.habitName === newHabit.habitName)) {
-                const message = `${user.userName} added a new habit: ${newHabit.emoji} ${newHabit.habitName}`;
-                await broadcastAndStoreEvent(user.userName, 'habitAdded', message);
-            }
-        }
-        
-        user.habits = newHabits;
+        user.habits = req.body.habits;
         await DB.updateUserHabits(user);
         res.send(user.habits);
     }
@@ -290,38 +217,12 @@ app.post('/api/friends/add', verifyAuth, async (req, res) => {
     }
 });
 
-// Get all notifications for current user
-app.get('/api/notifications', verifyAuth, async (req, res) => {
-    const user = await getUser('token', req.cookies['token']);
-    if (user) {
-        const notifications = await DB.getNotifications(user.userName);
-        res.send(notifications || []);
-    } else {
-        res.status(400).send({ message: 'User does not exist' });
-    }
-});
-
-// Delete a notification by ID
-app.delete('/api/notifications/:id', verifyAuth, async (req, res) => {
-    const user = await getUser('token', req.cookies['token']);
-    if (user) {
-        const result = await DB.deleteNotification(req.params.id);
-        if (result.deletedCount > 0) {
-            res.send({ message: 'Notification deleted' });
-        } else {
-            res.status(404).send({ message: 'Notification not found' });
-        }
-    } else {
-        res.status(400).send({ message: 'User does not exist' });
-    }
-});
-
 const port = 4000;
 const httpService = app.listen(port, function () {
     console.log(`Listening on port ${port}`);
 });
 
-socketServer = peerProxy(httpService);
+peerProxy(httpService);
 
 app.get(/.*/, (req, res) => {
     res.sendFile('index.html', { root: 'public' });

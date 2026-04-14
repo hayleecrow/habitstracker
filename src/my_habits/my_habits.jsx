@@ -1,13 +1,11 @@
 import React from 'react';
 import './my_habits.css';
-import { getInfoByField, updateUserInfo, deleteNotification, getNotifications } from '../service';
-import * as friendNotifier from '../friendNotifier';
+import { getInfoByField, updateUserInfo } from '../service';
 
 export function MyHabits({ userName }) {
     const [habits, setHabits] = React.useState([]);
     const [overallStreak, setOverallStreak] = React.useState({});
     const [isInitialized, setIsInitialized] = React.useState(false);
-    const [notifications, setNotifications] = React.useState([]);
     
     const [newHabitName, setNewHabitName] = React.useState('');
     const [newHabitEmoji, setNewHabitEmoji] = React.useState('');
@@ -22,19 +20,12 @@ export function MyHabits({ userName }) {
         async function fetchUserInfo() {
             const habits = await getInfoByField('habits');
             const overallStreak = await getInfoByField('overallStreak');
-            const persistedNotifications = await getNotifications();
-
             setHabits(habits);
             setOverallStreak(overallStreak);
-
-            if (persistedNotifications && persistedNotifications.length > 0) {
-                setNotifications(persistedNotifications);
-            }
             if (habits && overallStreak) {
                 setIsInitialized(true);
             }
         }
-        
         const fetchEmojis = async () => {
             const res = await fetch('https://emojihub.yurace.pro/api/all');
             const data = await res.json();
@@ -118,26 +109,6 @@ export function MyHabits({ userName }) {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-
-    // Initialize notification listener
-    React.useEffect(() => {
-        if (isInitialized) {
-            friendNotifier.initNotifier(userName);
-            const handleNotification = async (event) => {
-                // Real-time notification received, fetch updated list from server
-                const updatedNotifications = await getNotifications();
-                if (updatedNotifications && updatedNotifications.length > 0) {
-                    setNotifications(updatedNotifications);
-                }
-            };
-            friendNotifier.onNotification(handleNotification);
-        }
-    }, [isInitialized]);
-
-    async function handleDismissNotification(notificationId) {
-        await deleteNotification(notificationId);
-        setNotifications(prev => prev.filter(n => n._id !== notificationId));
-    }
 
     function decodeHtml(html) {
         const txt = document.createElement("textarea");
@@ -225,21 +196,6 @@ export function MyHabits({ userName }) {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {/* Notifications Toast Container */}
-            <div className="toast-container position-fixed top-0 end-0 p-3" style={{ zIndex: 11 }}>
-                {notifications.map(notification => (
-                    <div key={notification._id} className="toast show" role="alert">
-                        <div className="toast-header">
-                            <strong className="me-auto">Notification</strong>
-                            <button type="button" className="btn-close" onClick={() => handleDismissNotification(notification._id)}></button>
-                        </div>
-                        <div className="toast-body">
-                            {notification.message}
-                        </div>
-                    </div>
-                ))}
             </div>
         </main>
   );

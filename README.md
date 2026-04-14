@@ -116,8 +116,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Backend listens for WebSocket connection** - 
-- [x] **Frontend makes WebSocket connection** - Does this in the friendNotifier.js file in the frontend
-- [x] **Data sent over WebSocket connection** - When a user's friend completes a habit it sends a notification to the user
-- [x] **WebSocket data displayed** - It displays it as a toast notification (...but only after a hard refresh, will need to fix this in the future)
-- [x] **Application is fully functional** - There are still some things I would like to improve, but the MVPs are all functional!
+- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
+- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
+- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
+- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
+- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
