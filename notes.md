@@ -25,7 +25,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-...
+The HTML super simple and easy. It helped that I first made a plan for the layout by drawing a simple outline of what I imagined it looking like on sticky notes. It made it easy to determine what tags I needed and what order to put them in.
 
 ## CSS
 
