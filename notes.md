@@ -8,7 +8,7 @@
 - [ ] Fix error handling so that all errors are displayed to the user without having to go the Inspect window
 - [ ] Update responsive design to fill the mobile device screen port without scrolling if scrolling is not needed for the info displayed
 - [ ] Update GitHub to make it so no one can edit my code without my permission or at least without me knowing about it
-- [ ] Change service directory name to "backend" (Learn how to update Deploy scripts with this change)
+- [ ] Change service directory name to "backend" (Learn how to update Deploy scripts with this change [x])
 - [ ] Add delete habits button and functionality
 - [ ] Add delte friends button and functionality
 - [ ] Allow more emojis to be displayed and chosen from
