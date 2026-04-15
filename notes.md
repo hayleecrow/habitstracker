@@ -29,7 +29,7 @@ The HTML super simple and easy. It helped that I first made a plan for the layou
 
 ## CSS
 
-...
+I loved learning how to use Bootstrap! It made the CSS for this project 10 times easier than I remember it being for past projects.
 
 ## React Part 1: Routing
 
