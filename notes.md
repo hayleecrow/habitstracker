@@ -1,3 +1,25 @@
+# TODO
+
+- [ ] Issue: Doesn't count the days properly anymore. The completed today doesn't seem to be updating properly at midnight.
+- [ ] Update hostname to be HabitsGo instead of habitstracker
+- [ ] Implement WebSocket (and this time do it right!)
+- [ ] Create a different view for creating an account (more like what is widely used for creating an account)
+- [ ] Implement a couple rules for valid passwords (Research best practices to find the safest way to encourage users to create safe passwords)
+- [ ] Fix error handling so that all errors are displayed to the user without having to go the Inspect window
+- [ ] Update responsive design to fill the mobile device screen port without scrolling if scrolling is not needed for the info displayed
+- [ ] Update GitHub to make it so no one can edit my code without my permission or at least without me knowing about it
+- [ ] Change service directory name to "backend" (Learn how to update Deploy scripts with this change)
+- [ ] Add delete habits button and functionality
+- [ ] Add delte friends button and functionality
+- [ ] Allow more emojis to be displayed and chosen from
+- [ ] Issue: Fix emoji fetching error that happens every once in awhile
+- [ ] When user is auto logged out, redirect them to the login page instead of staying on the page they were on that are now erroring bc the user is logged out
+- [ ] Add better functionality for pressing `Enter` and `Tab` keys to input and submit input info (Works for login but not for checkboxs and modals)
+- [ ] Allow user to set display name, if they want it to be different than their username
+- [ ] Allow users to be notified when another user adds them as a friend
+- [ ] Optimize processes using browser tools to see
+- [ ] Optimize security
+
 # CS 260 Notes
 
 [My startup - Habits Go](https://habitstracker.click)
