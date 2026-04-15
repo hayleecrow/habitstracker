@@ -38,3 +38,15 @@ No problems worked just like it said in the [instruction](https://github.com/web
 ## React Part 2: Reactivity
 
 ...
+
+## Service / Backend
+
+...
+
+## Database (MongoDB)
+
+...
+
+## Websocket
+
+...
