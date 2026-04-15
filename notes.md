@@ -19,6 +19,13 @@
 - [ ] Allow users to be notified when another user adds them as a friend
 - [ ] Optimize processes using browser tools to see
 - [ ] Optimize security
+- [ ] Optimize responsive design
+- [ ] On Friends page, thicken the line between the user's habits and their friend's habits to distinguish between them better
+- [ ] When a user adds a friend and their friend doesn't have any habits yet, display a default message
+- [ ] Allow users to send their friends encouragement with completeing their habits
+- [ ] Only display the fire streak after the user completes the habit that day (update the animation a little to make it slightly bigger at first as well)
+- [ ] Play with PWA functionality
+- [ ] Discover how to create a phone widget for my app !!
 
 # CS 260 Notes
 
