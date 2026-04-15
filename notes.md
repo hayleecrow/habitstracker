@@ -8,6 +8,9 @@
 - [Canvas](https://byu.instructure.com)
 - [MDN](https://developer.mozilla.org)
 
+## Commits
+Good commit messages include the what and why and often use consistant naming conventions
+
 ## AWS
 
 My Domain Name is: habitstracker.click
