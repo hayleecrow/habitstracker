@@ -45,7 +45,7 @@ I loved learning how to use Bootstrap! It made the CSS for this project 10 times
 
 ## Database (MongoDB)
 
-...
+From what I've heard, MongoDB is a good database for developers because it's easy for us to use. However, it's not a relational DB so it makes it difficult to save connections/relations between the items saved in the database.
 
 ## Websocket
 
