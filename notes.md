@@ -30,6 +30,7 @@ The HTML super simple and easy. It helped that I first made a plan for the layou
 ## CSS
 
 I loved learning how to use Bootstrap! It made the CSS for this project 10 times easier than I remember it being for past projects.
+I also learned how to create simple animations using only CSS! The fire icons for streaks are just rotating fire emojis using a simple CSS animation.
 
 ## React Part 1: Routing
 
